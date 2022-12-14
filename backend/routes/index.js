@@ -3,8 +3,12 @@ const express = require('express');
 const router = express.Router();
 
 
-//test router
+//import the index.js in api into here, and connect it to the this router
+const apiRouter = require('./api');
 
+router.use('/api', apiRouter);
+
+//test router
 // router.get('/hello/world', function(req, res) {
 //   res.cookie('XSRF-TOKEN', req.csrfToken());
 //   res.send('Hello World!');
@@ -18,5 +22,6 @@ router.get("/api/csrf/restore", (req, res) => {
     'XSRF-Token': csrfToken
   });
 });
+
 
 module.exports = router;
