@@ -8,6 +8,7 @@ const { User } = require('../../db/models');
 const router = express.Router();
 
 // Sign up
+
 const validateSignup = [
   check('email')
     .exists({ checkFalsy: true })
