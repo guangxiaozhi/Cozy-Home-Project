@@ -118,13 +118,13 @@ const validateSpot = [
   .withMessage('Price per day is required'),
   handleValidationErrors
 ];
-router.post('/', requireAuth,validateSpot, async (req, res, next)=>{
-  const {user} = req;
-  console.log(user);
-  const {address, city, state, country, lat, lng, name ,description, price} = req.body;
-  const spot = await user.createSpot({ownerId:user.id,address, city, state, country, lat, lng, name ,description, price});
-  res.json(spot);
+// router.post('/', requireAuth,validateSpot, async (req, res, next)=>{
+//   const {user} = req;
+//   console.log(user);
+//   const {address, city, state, country, lat, lng, name ,description, price} = req.body;
+//   const spot = await user.createSpot({ownerId:user.id,address, city, state, country, lat, lng, name ,description, price});
+//   res.json(spot);
 
-})
+// })
 
 module.exports = router;
