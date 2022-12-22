@@ -2,7 +2,8 @@ const express = require('express');
 const sequelize = require('sequelize')
 const router = express();
 const { Spot, Review, SpotImage } = require('../../db/models');
-const { requireAuth ,handleValidationErrors} = require("../../utils/auth");
+const { requireAuth } = require("../../utils/auth");
+const {handleValidationErrors} = require('../../utils/validation')
 const { check} = require("express-validator");
 
 
@@ -127,11 +128,21 @@ const validateSpot = [
     .withMessage('Price per day is required'),
   handleValidationErrors
 ];
-router.post('/', requireAuth, validateSpot, async (req, res, next)=>{
+router.post('/', [requireAuth, validateSpot], async (req, res, next)=>{
   const {user} = req;
-  console.log(user);
   const {address, city, state, country, lat, lng, name ,description, price} = req.body;
-  const spot = await user.createSpot({ownerId:user.id,address, city, state, country, lat, lng, name ,description, price});
+  const spot = await Spot.create({
+    ownerId:user.id,
+    address,
+    city,
+    state,
+    country,
+    lat,
+    lng,
+    name,
+    description,
+    price
+  });
   res.json(spot);
 
 })
