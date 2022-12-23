@@ -85,46 +85,55 @@ router.get('/current', requireAuth, async (req, res, next) =>{
 })
 const validateSpot = [
   check('address')
+    .exists({ checkFalsy: true })
     .notEmpty()
     .withMessage('Street address is required'),
   check('city')
-  .notEmpty()
-  .withMessage('City is required.'),
+    .exists({ checkFalsy: true })
+    .notEmpty()
+    .withMessage('City is required.'),
   check('state')
-  .notEmpty()
-  .withMessage('State is required.'),
+    .exists({ checkFalsy: true })
+    .notEmpty()
+    .withMessage('State is required.'),
   check('country')
-  .notEmpty()
-  .withMessage('Country is required.'),
+    .exists({ checkFalsy: true })
+    .notEmpty()
+    .withMessage('Country is required.'),
   check('lat')
-  .notEmpty()
-  .isDecimal()
-  .withMessage('Latitude is not valid'),
+    .exists({ checkFalsy: true })
+    .notEmpty()
+    .isDecimal()
+    .withMessage('Latitude is not valid'),
   check('lng')
-  .notEmpty()
-  .isDecimal()
-  .withMessage('Longitude is not valid'),
+    .exists({ checkFalsy: true })
+    .notEmpty()
+    .isDecimal()
+    .withMessage('Longitude is not valid'),
   check('name')
-  .isLength({ max: 50 })
-  .withMessage('Name must be less than 50 characters')
-  .notEmpty()
-  .withMessage('Name is required'),
+    .exists({ checkFalsy: true })
+    .notEmpty()
+    .withMessage('Name is required')
+    .isLength({ max: 50 })
+    .withMessage('Name must be less than 50 characters'),
   check('description')
-  .notEmpty()
-  .withMessage('Description is required'),
+    .exists({ checkFalsy: true })
+    .notEmpty()
+    .withMessage('Description is required'),
   check('price')
-  .notEmpty()
-  .isDecimal()
-  .withMessage('Price per day is required'),
+    .exists({ checkFalsy: true })
+    .notEmpty()
+    .isDecimal()
+    .withMessage('Price per day is required'),
   handleValidationErrors
 ];
-// router.post('/', requireAuth,validateSpot, async (req, res, next)=>{
-//   const {user} = req;
-//   console.log(user);
-//   const {address, city, state, country, lat, lng, name ,description, price} = req.body;
-//   const spot = await user.createSpot({ownerId:user.id,address, city, state, country, lat, lng, name ,description, price});
-//   res.json(spot);
+router.post('/', requireAuth, validateSpot, async (req, res, next)=>{
+  const {user} = req;
+  console.log(user);
+  const {address, city, state, country, lat, lng, name ,description, price} = req.body;
+  const spot = await user.createSpot({ownerId:user.id,address, city, state, country, lat, lng, name ,description, price});
+  res.json(spot);
 
-// })
+})
 
 module.exports = router;
