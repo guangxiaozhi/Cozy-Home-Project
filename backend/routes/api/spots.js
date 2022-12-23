@@ -145,6 +145,41 @@ router.post('/', [requireAuth, validateSpot], async (req, res, next)=>{
   });
   res.json(spot);
 
+});
+
+router.post('/:id/images',requireAuth, async (req, res, next) => {
+  const spotId = req.params.id;
+  const {url, preview} = req.body;
+  const spot = await Spot.findOne({
+    where:{
+      id:spotId
+    }
+  })
+  if(!spot){
+    res.status(404);
+    return res.json({
+      message:"spot couldn't find"
+    })
+  }
+  let newImage;
+  if(spot.ownerId !== req.user.id){
+    res.status(400);
+    return res.json({
+      message:'spot is not current user\'s spot'
+    })
+  }else{
+    newImage = await spot.createSpotImage({
+      spotId:spot.id,
+      url,
+      preview
+    })
+  }
+
+  res.json({
+    id:newImage.id,
+    url:newImage.url,
+    preview:newImage.preview
+  });
 })
 
 module.exports = router;
