@@ -224,4 +224,6 @@ router.get('/:id', async (req, res, next) => {
   res.json(jsonSpot);
 })
 
+
+
 module.exports = router;
