@@ -6,7 +6,7 @@ const { requireAuth } = require("../../utils/auth");
 const {handleValidationErrors} = require('../../utils/validation')
 const { check} = require("express-validator");
 
-
+// Get all Spots
 router.get('/', requireAuth, async (req, res, next)=> {
   const allSpots = await Spot.findAll({
     include:[
@@ -44,6 +44,7 @@ router.get('/', requireAuth, async (req, res, next)=> {
   res.json({Spots});
 })
 
+// Get Spots owned by the Current User
 router.get('/current', requireAuth, async (req, res, next) =>{
   const userId = req.user.id;
   const allSpots = await Spot.findAll({
@@ -84,6 +85,8 @@ router.get('/current', requireAuth, async (req, res, next) =>{
 
   res.json({Spots});
 })
+
+// Create a spot
 const validateSpot = [
   check('address')
     .exists({ checkFalsy: true })
@@ -147,6 +150,7 @@ router.post('/', [requireAuth, validateSpot], async (req, res, next)=>{
 
 });
 
+// Add an Image to a Spot based on the Spot's id
 router.post('/:id/images',requireAuth, async (req, res, next) => {
   const spotId = req.params.id;
   const {url, preview} = req.body;
