@@ -22,13 +22,17 @@ const validateSignup = [
     .not()
     .isEmail()
     .withMessage('Username cannot be an email.'),
-  check('password')
-    .exists({ checkFalsy: true })
-    .isLength({ min: 6 })
-    .withMessage('Password must be 6 characters or more.'),
+  check('lastname')
+    .not()
+    .isEmail()
+    .withMessage('Must provide a last name'),
   check('firstName')
     .exists({checkFalsy: true})
     .withMessage('Must provide a first name'),
+  check('password')
+      .exists({ checkFalsy: true })
+      .isLength({ min: 6 })
+      .withMessage('Password must be 6 characters or more.'),
   handleValidationErrors
 ];
 router.post(
