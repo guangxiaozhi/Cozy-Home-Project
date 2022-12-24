@@ -22,13 +22,17 @@ const validateSignup = [
     .not()
     .isEmail()
     .withMessage('Username cannot be an email.'),
-  check('password')
-    .exists({ checkFalsy: true })
-    .isLength({ min: 6 })
-    .withMessage('Password must be 6 characters or more.'),
+  check('lastname')
+    .not()
+    .isEmail()
+    .withMessage('Must provide a last name'),
   check('firstName')
     .exists({checkFalsy: true})
     .withMessage('Must provide a first name'),
+  check('password')
+      .exists({ checkFalsy: true })
+      .isLength({ min: 6 })
+      .withMessage('Password must be 6 characters or more.'),
   handleValidationErrors
 ];
 router.post(
@@ -36,6 +40,37 @@ router.post(
   validateSignup,
   async (req, res) => {
     const { email, password, username, firstName, lastName } = req.body;
+    const sameEmail = await User.findOne({
+      where:{
+        email
+      }
+    });
+    if (sameEmail) {
+      res.status(403);
+      res.json({
+        "message": "User already exists",
+        "statusCode": 403,
+        "errors": [
+          "User with that email already exists"
+        ]
+      })
+    };
+
+    const sameUserName = await User.findOne({
+      where:{
+        username
+      }
+    })
+    if (sameUserName) {
+      res.status(403);
+      res.json({
+        "message": "User already exists",
+        "statusCode": 403,
+        "errors": [
+          "User with that username already exists"
+        ]
+      })
+    }
     const user = await User.signup({ email, username, password, firstName, lastName });
 
     await setTokenCookie(res, user);
