@@ -187,7 +187,7 @@ router.post('/:id/images',requireAuth, async (req, res, next) => {
 })
 
 //Get details for a Spot from an id
-router.get('/:id', async (req, res, next) => {
+router.get('/:id',requireAuth, async (req, res, next) => {
   const spot = await Spot.findOne({
     where:{
       id:req.params.id
@@ -222,6 +222,52 @@ router.get('/:id', async (req, res, next) => {
   jsonSpot.avgStarTating = sum/jsonSpot.numReviews;
   delete jsonSpot.Reviews;
   res.json(jsonSpot);
+})
+
+// Edit a spot
+router.put('/:id',requireAuth, async (req, res, next) => {
+  const updateSpot = await Spot.findOne({
+    where:{
+      id: req.params.id
+    }
+  })
+  if(!updateSpot){
+    res.status = 404;
+    return res.json({
+      "message": "Spot couldn't be found"
+    })
+  }
+  const {address, city, state, country, lat, lng, name, description, price} = req.body;
+  if(!(address && city && state && country && lat && lng && name && description && price)){
+    res.status(400);
+    return res.json({
+      "message": "Validation Error",
+      "errors": [
+        "Street address is required",
+        "City is required",
+        "State is required",
+        "Country is required",
+        "Latitude is not valid",
+        "Longitude is not valid",
+        "Name must be less than 50 characters",
+        "Description is required",
+        "Price per day is required"
+      ]
+    })
+  }
+  updateSpot.update({
+    address,
+    city,
+    state,
+    country,
+    lat,
+    lng,
+    name,
+    description,
+    price
+  })
+
+  res.json(updateSpot)
 })
 
 module.exports = router;
