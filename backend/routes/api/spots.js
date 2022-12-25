@@ -270,7 +270,35 @@ router.put('/:id',requireAuth, async (req, res, next) => {
 
 // Create a Review for a Spot
 router.post('/:id/reviews', requireAuth, async (req, res, next) => {
-  res.json('test')
+  const spot = await Spot.findOne({
+    where:{
+      id:req.params.id
+    }
+  })
+  if (!spot){
+    res.status = 404;
+    return res.json({
+      "message": "Spot couldn't be found"
+    })
+  }
+  const {review, stars} = req.body;
+  if(!(review && stars)){
+    res.status = 400;
+    return res.json({
+      "message": "Validation error",
+      "errors": [
+        "Review text is required",
+        "Stars must be an integer from 1 to 5",
+      ]
+    })
+  }
+  const newReview = await spot.createReview({
+    userId:spot.ownerId,
+    spotId:req.params.id,
+    review,
+    stars
+  })
+  res.json(newReview);
 })
 
 module.exports = router;
