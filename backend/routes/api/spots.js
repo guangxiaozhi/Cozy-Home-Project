@@ -271,6 +271,8 @@ router.put('/:id',requireAuth, async (req, res, next) => {
 })
 
 // Create a Review for a Spot
-router.post('/:id/reviews', )
+router.post('/:id/reviews', requireAuth, async (req, res, next) => {
+  
+})
 
 module.exports = router;
