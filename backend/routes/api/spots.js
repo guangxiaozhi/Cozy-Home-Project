@@ -218,7 +218,11 @@ router.get('/:id',requireAuth, async (req, res, next) => {
   for(let review of jsonSpot.Reviews){
     sum = sum + review.stars;
   }
-  jsonSpot.avgStarTating = sum/jsonSpot.numReviews;
+  if(jsonSpot.numReviews){
+    jsonSpot.avgStarTating = sum/jsonSpot.numReviews;
+  }else{
+    jsonSpot.avgStarTating = 0;
+  }
   delete jsonSpot.Reviews;
   res.json(jsonSpot);
 })
