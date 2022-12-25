@@ -186,7 +186,7 @@ router.post('/:id/images',requireAuth, async (req, res, next) => {
   });
 })
 
-//Get details for a Spot from an id
+// Get details for a Spot from an id
 router.get('/:id',requireAuth, async (req, res, next) => {
   const spot = await Spot.findOne({
     where:{
@@ -269,5 +269,8 @@ router.put('/:id',requireAuth, async (req, res, next) => {
 
   res.json(updateSpot)
 })
+
+// Create a Review for a Spot
+router.post('/:id/reviews', )
 
 module.exports = router;
