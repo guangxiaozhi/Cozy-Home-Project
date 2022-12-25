@@ -1,7 +1,7 @@
 const express = require('express');
 const sequelize = require('sequelize')
 const router = express();
-const { Spot, Review, SpotImage } = require('../../db/models');
+const { Spot, Review, SpotImage, User } = require('../../db/models');
 const { requireAuth } = require("../../utils/auth");
 const {handleValidationErrors} = require('../../utils/validation')
 const { check} = require("express-validator");
@@ -184,6 +184,44 @@ router.post('/:id/images',requireAuth, async (req, res, next) => {
     url:newImage.url,
     preview:newImage.preview
   });
+})
+
+//Get details for a Spot from an id
+router.get('/:id', async (req, res, next) => {
+  const spot = await Spot.findOne({
+    where:{
+      id:req.params.id
+    },
+    include:[
+      {
+      model:Review
+      },
+      {
+        model:SpotImage,
+        attributes:['id', 'url', 'preview']
+      },
+      {
+        model:User,
+        as:'Owner',
+        attributes:['id', 'firstName', 'lastName']
+      }
+    ],
+  })
+  if (!spot){
+    res.status(404);
+    res.json({
+      "message": "Spot couldn't be found"
+    })
+  }
+  let sum = 0;
+  const jsonSpot = spot.toJSON();
+  jsonSpot.numReviews = spot.Reviews.length;
+  for(let review of jsonSpot.Reviews){
+    sum = sum + review.stars;
+  }
+  jsonSpot.avgStarTating = sum/jsonSpot.numReviews;
+  delete jsonSpot.Reviews;
+  res.json(jsonSpot);
 })
 
 module.exports = router;
