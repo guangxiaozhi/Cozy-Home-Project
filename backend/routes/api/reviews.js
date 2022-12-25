@@ -32,6 +32,9 @@ router.post('/:id/images', requireAuth, async (req, res, next) => {
     reviewId:review.id,
     url
   })
-  res.json(review);
+  res.json({
+    "id": reviewImage.id,
+    "url":reviewImage.url
+  });
 })
 module.exports = router;
