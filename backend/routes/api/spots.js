@@ -24,7 +24,6 @@ router.get('/', requireAuth, async (req, res, next)=> {
   })
   Spots.forEach((spot) => {
     spot.SpotImages.forEach(spotImage =>{
-      console.log(spotImage.url);
       if (spotImage.url){
         spot.previewImage = spotImage.url;
       }
@@ -33,7 +32,6 @@ router.get('/', requireAuth, async (req, res, next)=> {
     let count = 0;
     spot.Reviews.forEach(review =>{
       i++;
-      console.log(review);
       count = count + review.stars;
     })
     spot.avgRating = count/i;
@@ -272,7 +270,7 @@ router.put('/:id',requireAuth, async (req, res, next) => {
 
 // Create a Review for a Spot
 router.post('/:id/reviews', requireAuth, async (req, res, next) => {
-  
+  res.json('test')
 })
 
 module.exports = router;
