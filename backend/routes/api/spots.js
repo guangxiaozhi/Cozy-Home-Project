@@ -1,10 +1,11 @@
 const express = require('express');
-const sequelize = require('sequelize')
+const {sequelize, Op } = require('sequelize')
 const router = express();
 const { Spot, Review, SpotImage, User } = require('../../db/models');
 const { requireAuth } = require("../../utils/auth");
 const {handleValidationErrors} = require('../../utils/validation')
 const { check} = require("express-validator");
+
 
 // Get all Spots
 router.get('/', requireAuth, async (req, res, next)=> {
@@ -292,6 +293,25 @@ router.post('/:id/reviews', requireAuth, async (req, res, next) => {
       ]
     })
   }
+  const existReview = await Review.findOne({
+    where:{
+      [Op.and]:[
+        {
+          userId:spot.ownerId
+        },
+        {
+          spotId:req.params.id
+        }
+      ]
+    }
+  })
+  if(existReview){
+    res.status(403)
+    return res.json({
+      "message": "User already has a review for this spot"
+    })
+  }
+
   const newReview = await spot.createReview({
     userId:spot.ownerId,
     spotId:req.params.id,
