@@ -1,7 +1,7 @@
 const express = require('express');
 const {sequelize, Op } = require('sequelize')
 const router = express();
-const { Spot, Review, SpotImage, User } = require('../../db/models');
+const { Spot, Review, SpotImage, User, ReviewImage } = require('../../db/models');
 const { requireAuth } = require("../../utils/auth");
 const {handleValidationErrors} = require('../../utils/validation')
 const { check} = require("express-validator");
@@ -325,6 +325,35 @@ router.post('/:id/reviews', requireAuth, async (req, res, next) => {
   res.json(newReview);
 })
 
-
+// Get Reviews by Spot Id
+router.get('/:id/reviews', requireAuth, async (req, res, next) => {
+  const spot = await Spot.findByPk(req.params.id);
+  if(!spot){
+    res.status(404);
+    return res.json({
+      "message": "Spot couldn't be found"
+    })
+  }
+  const reviews = await Review.findAll({
+    where:{
+      spotId:req.params.id
+    },
+    include:[
+      {
+        model:User,
+        attributes:["id", "firstName", "lastName"]
+      },
+      {
+        model:ReviewImage,
+        attributes:["id","url"]
+      }
+    ]
+  })
+  res.json(
+    {
+    "reviews":reviews
+    }
+  );
+})
 
 module.exports = router;
