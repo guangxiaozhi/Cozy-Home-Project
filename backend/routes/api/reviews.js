@@ -3,6 +3,8 @@ const {sequelize, Op } = require('sequelize')
 const router = express();
 const { requireAuth } = require("../../utils/auth");
 const { User, Review, ReviewImage, Spot } = require('../../db/models')
+const { check } = require('express-validator');
+const { handleValidationErrors } = require('../../utils/validation');
 
 //Create an Image for a Review
 router.post('/:id/images', requireAuth, async (req, res, next) => {
@@ -89,5 +91,39 @@ router.get('/current', requireAuth, async (req, res, next) => {
       "reviews": reviews
     }
   );
+})
+
+// Edit a Review
+const validateReview = [
+  check('review')
+    .exists({checkFalsy:true})
+    .withMessage("Review text is required"),
+  check('stars')
+    .exists({ checkFalsy: true })
+    .isInt({ min: 0, max: 5 })
+    .withMessage('Stars must be an integer from 1 to 5'),
+handleValidationErrors
+]
+router.put('/:id',validateReview, requireAuth, async (req, res, next) => {
+  const specialReview = await Review.findByPk(req.params.id);
+  if(specialReview.userId !== req.user.id){
+    const error = new Error('Forbidden');
+    error.status(404);
+    next(err);
+  }
+  if(!specialReview){
+    res.status(404);
+    return res.json({
+      "message": "Review couldn't be found"
+    })
+  }
+
+  const {review, stars} = req.body;
+  specialReview.update({
+    review,
+    stars
+  })
+
+  res.json(specialReview);
 })
 module.exports = router;
