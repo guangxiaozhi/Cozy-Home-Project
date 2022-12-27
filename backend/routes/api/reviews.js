@@ -2,7 +2,7 @@ const express = require('express');
 const {sequelize, Op } = require('sequelize')
 const router = express();
 const { requireAuth } = require("../../utils/auth");
-const { User, Review, ReviewImage, Spot } = require('../../db/models')
+const { User, Review, ReviewImage, Spot, SpotImage } = require('../../db/models')
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 
@@ -54,41 +54,37 @@ router.get('/current', requireAuth, async (req, res, next) => {
       },
       {
         model:Spot,
-        attributes:['id', 'ownerId', 'address','city','state', 'country', 'lat', 'lng', 'name', 'price']
+        attributes:['id', 'ownerId', 'address','city','state', 'country', 'lat', 'lng', 'name', 'price'],
+        include:{
+          model:SpotImage
+        }
       },
       {
         model:ReviewImage,
         attributes:['id', 'url']
-      }
+      },
+
     ]
   })
 
-  reviews.forEach(review =>{
-    review.toJSON();
-    review.Spot.previewImage = '';
-    if(review.ReviewImages){
-      let urlValue;
-      const reviewImages = review.ReviewImages;
-      reviewImages.forEach(reviewImage =>{
-        reviewImage.toJSON();
-        urlValue = reviewImage.url;
-      })
-      // review.Spot[0]['previewImage'] = urlValue;
-      // console.log("befor toJSON: ", review.Spot)
-      // review.Spot.toJSON();
-      // console.log("after toJSON: ",review.Spot)
-      console.log(Object.keys(review.Spot));
-      review.Spot["previewImage"] = urlValue;
-      console.log(Object.keys(review.Spot.toJSON()));
-
-    }else{
-      review.Spot["previewImage"] = "No image available"
+  const reviewsList = [];
+  reviews.forEach(review => {
+    reviewsList.push(review.toJSON());
+  });
+  reviewsList.forEach(review => {
+    review.Spot.SpotImages.forEach(image =>{
+      if(image.preview === true){
+        review.Spot.previewImage = image.url
+      }
+    })
+    if(!review.Spot.previewImage){
+      review.Spot.previewImage = "no preview image found"
     }
-
+    delete review.Spot.SpotImages
   })
   res.json(
     {
-      "reviews": reviews
+      "reviews": reviewsList
     }
   );
 })
