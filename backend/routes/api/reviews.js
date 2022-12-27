@@ -108,11 +108,11 @@ router.put('/:id',validateReview, requireAuth, async (req, res, next) => {
   const specialReview = await Review.findByPk(req.params.id);
   if(specialReview.userId !== req.user.id){
     const error = new Error('Forbidden');
-    error.status(404);
-    next(err);
+    error.status = 404;
+    next(error);
   }
   if(!specialReview){
-    res.status(404);
+    res.status = 404;
     return res.json({
       "message": "Review couldn't be found"
     })
@@ -126,4 +126,6 @@ router.put('/:id',validateReview, requireAuth, async (req, res, next) => {
 
   res.json(specialReview);
 })
+
+
 module.exports = router;
