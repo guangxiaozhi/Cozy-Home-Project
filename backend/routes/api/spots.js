@@ -77,7 +77,11 @@ router.get('/current', requireAuth, async (req, res, next) =>{
       console.log(review);
       count = count + review.stars;
     })
-    spot.avgRating = count/i;
+    if(i === 0){
+      spot.avgRating = 0;
+    }else{
+      spot.avgRating = count/i;
+    }
     delete spot.SpotImages;
     delete spot.Reviews;
   });
