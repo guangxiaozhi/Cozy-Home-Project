@@ -3,9 +3,7 @@ const { Model } = require('sequelize');
 const router = express();
 
 const { Booking, Spot, SpotImage } = require('../../db/models');
-const { requireAuth } = require('../../utils/auth');
-const { check} = require("express-validator");
-const {handleValidationErrors} = require('../../utils/validation')
+const { requireAuth, validateBooking } = require('../../utils/auth');
 
 // Get All Current User's Bookings
 router.get('/current', requireAuth, async (req, res, next) => {
@@ -52,15 +50,6 @@ router.get('/current', requireAuth, async (req, res, next) => {
 })
 
 //Edit a Booking
-const validateBooking = [
-  check('startDate')
-    .exists({ checkFalsy: true })
-    .withMessage('StartDate is required'),
-  check('endDate')
-    .exists({ checkFalsy: true })
-    .withMessage('StartDate is required'),
-  handleValidationErrors
-];
 router.put('/:id', requireAuth, validateBooking, async (req, res, next) => {
   const booking = await Booking.findByPk(req.params.id);
   console.log(booking);

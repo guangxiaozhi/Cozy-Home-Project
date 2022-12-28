@@ -2,7 +2,7 @@ const express = require('express');
 const {sequelize, Op } = require('sequelize')
 const router = express();
 const { Spot, Review, SpotImage, User, ReviewImage, Booking } = require('../../db/models');
-const { validateReview, requireAuth } = require("../../utils/auth");
+const { requireAuth, validateReview, validateBooking } = require("../../utils/auth");
 const {handleValidationErrors} = require('../../utils/validation');
 const { check} = require("express-validator");
 
@@ -344,15 +344,7 @@ router.get('/:id/reviews', requireAuth, async (req, res, next) => {
 })
 
 // Create a Booking Based on a Spot Id
-const validateBooking = [
-  check('startDate')
-    .exists({ checkFalsy: true })
-    .withMessage('startDate is required'),
-  check('endDate')
-    .exists({checkFalsy:true})
-    .withMessage('endDate is required'),
-    handleValidationErrors
-]
+
 router.post('/:id/bookings', requireAuth, validateBooking, async (req, res, next) => {
   const spot = await Spot.findByPk(req.params.id);
   if(!spot){

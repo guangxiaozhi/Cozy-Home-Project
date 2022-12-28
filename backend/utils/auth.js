@@ -74,6 +74,17 @@ const validateReview = [
     .isInt({ min: 0, max: 5 })
     .withMessage('Stars must be an integer from 1 to 5'),
 handleValidationErrors
-]
+];
 
-module.exports = { setTokenCookie, restoreUser, requireAuth, validateReview };
+// validateBooking
+const validateBooking = [
+  check('startDate')
+    .exists({ checkFalsy: true })
+    .withMessage('StartDate is required'),
+  check('endDate')
+    .exists({ checkFalsy: true })
+    .withMessage('StartDate is required'),
+  handleValidationErrors
+];
+
+module.exports = { setTokenCookie, restoreUser, requireAuth, validateReview, validateBooking };
