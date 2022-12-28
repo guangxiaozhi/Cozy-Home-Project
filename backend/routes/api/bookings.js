@@ -20,7 +20,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
     }
   })
 
-  if(!bookings){
+  if(bookings.length === 0){
     res.status = 404;
     return res.json({
       "message": "User has no bookings."
