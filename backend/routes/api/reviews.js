@@ -4,7 +4,7 @@ const router = express();
 const { validateReview, requireAuth } = require("../../utils/auth");
 const { User, Review, ReviewImage, Spot, SpotImage } = require('../../db/models');
 
-//Create an Image for a Review
+// Add an Image for a Review
 router.post('/:id/images', requireAuth, async (req, res, next) => {
   const review = await Review.findOne({
     where:{
@@ -19,7 +19,14 @@ router.post('/:id/images', requireAuth, async (req, res, next) => {
     return res.json({
       "message": "Review couldn't be found"
     })
+  };
+  if(review.userId !== req.user.id){
+    res.status(403);
+    return res.json({
+      "message": "Forbidden"
+    })
   }
+
   if(review.ReviewImages.length >= 10){
     res.status(403);
     return res.json({
@@ -90,20 +97,19 @@ router.get('/current', requireAuth, async (req, res, next) => {
 // Edit a Review
 router.put('/:id',validateReview, requireAuth, async (req, res, next) => {
   const specialReview = await Review.findByPk(req.params.id);
-  console.log("specialReview.userId: ", specialReview.userId);
-  console.log("req.user.id: ", req.user.id)
-  if(specialReview.userId !== req.user.id){
-    res.status = 404;
-    return res.json({
-      "message": "Forbidden"
-    })
-  }
+  
   if(!specialReview){
     res.status = 404;
     return res.json({
       "message": "Review couldn't be found"
     })
-  }
+  };
+  if(specialReview.userId !== req.user.id){
+    res.status = 404;
+    return res.json({
+      "message": "Forbidden"
+    })
+  };
 
   const {review, stars} = req.body;
   specialReview.update({
