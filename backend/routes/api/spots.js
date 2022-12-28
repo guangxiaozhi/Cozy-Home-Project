@@ -450,4 +450,44 @@ router.post('/:id/bookings', requireAuth, validateBooking, async (req, res, next
   res.json(booking)
 })
 
+// Get all Bookings for a Spot based on the Spot's id
+router.get('/:id/bookings', requireAuth, async (req, res,next) => {
+  const spot = await Spot.findByPk(req.params.id);
+  if(!spot){
+    res.status = 404;
+    return res.json({
+      "message": "Spot couldn't be found"
+    })
+  }
+  const bookings = await Booking.findAll({
+    where:{
+      spotId:req.params.id
+    },
+    include:{
+      model:User
+    }
+  });
+  console.log(bookings);
+  if(bookings[0].toJSON().userId !== req.user.id){
+    const bookingsList = [];
+    bookings.forEach(booking => {
+      booking.toJSON();
+      const bookingMessage = {
+        "spotId":booking.spotId,
+        "startDate":booking.startDate,
+        "endDate":booking.endDate
+      }
+      bookingsList.push(bookingMessage);
+    })
+    res.status = 200;
+    return res.json(
+      {
+        "Bookings":bookingsList
+      }
+      )
+  }else{
+    res.status = 200;
+    res.json({"Bookings":bookings});
+  }
+})
 module.exports = router;
