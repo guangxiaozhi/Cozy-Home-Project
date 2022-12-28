@@ -97,7 +97,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
 // Edit a Review
 router.put('/:id',validateReview, requireAuth, async (req, res, next) => {
   const specialReview = await Review.findByPk(req.params.id);
-  
+
   if(!specialReview){
     res.status = 404;
     return res.json({
@@ -120,5 +120,27 @@ router.put('/:id',validateReview, requireAuth, async (req, res, next) => {
   res.json(specialReview);
 })
 
+// Delete a Review
+router.delete('/:id', requireAuth, async (req, res, next) => {
+  const review = await Review.findByPk(req.params.id);
+  if(!review){
+    res.status(404);
+    return res.json({
+      "message": "Review couldn't be found"
+    })
+  }
 
+  if(review.userId !== req.user.id){
+    res.status(403);
+    return res.json({
+      "message": "Forbidden"
+    })
+  }else{
+    await review.destroy();
+    res.status(200);
+    return res.json({
+      "message": "Successfully deleted"
+    })
+  }
+})
 module.exports = router;
