@@ -17,7 +17,8 @@ router.get('/', requireAuth, async (req, res, next)=> {
       {
         model:SpotImage
       }
-    ]
+    ],
+    order:['id']
   })
   const Spots = [];
   allSpots.forEach(spot => {
@@ -49,7 +50,7 @@ router.get('/current', requireAuth, async (req, res, next) =>{
   const allSpots = await Spot.findAll({
     where: {
       ownerId: userId
-  },
+    },
     include:[
       {
         model:Review
@@ -57,7 +58,8 @@ router.get('/current', requireAuth, async (req, res, next) =>{
       {
         model:SpotImage
       }
-    ]
+    ],
+    order:['id']
   })
   const Spots = [];
   allSpots.forEach(spot => {
@@ -278,7 +280,16 @@ router.put('/:id',requireAuth, async (req, res, next) => {
 })
 
 // Create a Review for a Spot
-router.post('/:id/reviews', requireAuth, async (req, res, next) => {
+const validateReview = [
+  check('review')
+    .exists()
+    .withMessage("Review text is required"),
+  check('stars')
+    .exists()
+    .isInt({min:0, max:5})
+    .withMessage("Stars must be an integer from 1 to 5")
+];
+router.post('/:id/reviews', requireAuth, validateReview, async (req, res, next) => {
   const spot = await Spot.findOne({
     where:{
       id:req.params.id
@@ -291,16 +302,6 @@ router.post('/:id/reviews', requireAuth, async (req, res, next) => {
     })
   }
   const {review, stars} = req.body;
-  if(!(review && stars)){
-    res.status = 400;
-    return res.json({
-      "message": "Validation error",
-      "errors": [
-        "Review text is required",
-        "Stars must be an integer from 1 to 5",
-      ]
-    })
-  }
   const existReview = await Review.findOne({
     where:{
       [Op.and]:[
@@ -351,7 +352,8 @@ router.get('/:id/reviews', requireAuth, async (req, res, next) => {
         model:ReviewImage,
         attributes:["id","url"]
       }
-    ]
+    ],
+    order:['id']
   })
   res.json(
     {
@@ -378,9 +380,25 @@ router.post('/:id/bookings', requireAuth, validateBooking, async (req, res, next
       "message": "Spot couldn't be found"
     })
   }
+  if(spot.ownerId === req.user.id){
+    res.status(400);
+    return res.json({
+      "message": "spot must not belong to the current user"
+    })
+  }
   const {startDate, endDate} = req.body;
+  const now = new Date();
+  if(new Date(startDate) < now || new Date(endDate) < now){
+    res.status(400);
+    return res.json({
+      "message": "Validation error",
+      "errors": [
+        "startDate and endDate can not be past time"
+      ]
+    })
+  }
   if(startDate >= endDate){
-    res.status = 400;
+    res.status(400);
     return res.json({
       "message": "Validation error",
       "errors": [
@@ -393,16 +411,10 @@ router.post('/:id/bookings', requireAuth, validateBooking, async (req, res, next
       spotId:spot.id
     }
   })
-  allBookings.forEach(booking => {
-    booking.toJSON();
-    console.log("booking: ",booking.toJSON())
-    const bookingStartDate = booking.startDate;
-    const bookingEndDate = booking.endDate;
-    console.log("bookingStartDate: ", bookingStartDate);
-    console.log("startDate: ", startDate);
-    console.log("bookingEndDate: ", bookingEndDate);
-    console.log("endDate: ", endDate)
-    if(bookingStartDate >= startDate && bookingStartDate <= endDate){
+  allBookings.forEach(booked => {
+    const bookedStartDate = booked.startDate;
+    const bookedEndDate = booked.endDate;
+    if(bookedStartDate >= startDate && bookedStartDate < endDate){
       res.status(403);
       return res.json({
         "message": "Sorry, this spot is already booked for the specified dates",
@@ -410,7 +422,7 @@ router.post('/:id/bookings', requireAuth, validateBooking, async (req, res, next
           "Start date conflicts with an existing booking"
         ]
       })
-    }else if(bookingEndDate >= startDate && bookingEndDate <= endDate){
+    }else if(bookedEndDate > startDate && bookedEndDate <= endDate){
       res.status(403);
       return res.json({
         "message": "Sorry, this spot is already booked for the specified dates",
@@ -418,11 +430,20 @@ router.post('/:id/bookings', requireAuth, validateBooking, async (req, res, next
           "End date conflicts with an existing booking"
         ]
       })
+    }else if(bookedStartDate < startDate && bookedEndDate > endDate){
+      res.status(403);
+      return res.json({
+        "message": "Sorry, this spot is already booked for the specified dates",
+        "errors": [
+          "Start date conflicts with an existing booking",
+          "End date conflicts with an existing booking"
+        ]
+      })
     }
   })
   const booking = await spot.createBooking({
     spotId:spot.id,
-    userId:req.user.id,
+    userId:spot.ownerId,
     startDate,
     endDate
   })
