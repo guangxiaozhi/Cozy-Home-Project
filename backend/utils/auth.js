@@ -2,6 +2,8 @@
 const jwt = require('jsonwebtoken');
 const { jwtConfig } = require('../config');
 const { User } = require('../db/models');
+const {handleValidationErrors} = require('./validation');
+const { check} = require("express-validator");
 
 const { secret, expiresIn } = jwtConfig;
 
@@ -62,5 +64,16 @@ const requireAuth = function (req, _res, next) {
   return next(err);
 };
 
+// validateReview
+const validateReview = [
+  check('review')
+    .exists({checkFalsy:true})
+    .withMessage("Review text is required"),
+  check('stars')
+    .exists({ checkFalsy: true })
+    .isInt({ min: 0, max: 5 })
+    .withMessage('Stars must be an integer from 1 to 5'),
+handleValidationErrors
+]
 
-module.exports = { setTokenCookie, restoreUser, requireAuth };
+module.exports = { setTokenCookie, restoreUser, requireAuth, validateReview };

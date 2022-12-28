@@ -1,10 +1,8 @@
 const express = require('express');
 const {sequelize, Op } = require('sequelize')
 const router = express();
-const { requireAuth } = require("../../utils/auth");
-const { User, Review, ReviewImage, Spot, SpotImage } = require('../../db/models')
-const { check } = require('express-validator');
-const { handleValidationErrors } = require('../../utils/validation');
+const { validateReview, requireAuth } = require("../../utils/auth");
+const { User, Review, ReviewImage, Spot, SpotImage } = require('../../db/models');
 
 //Create an Image for a Review
 router.post('/:id/images', requireAuth, async (req, res, next) => {
@@ -90,22 +88,15 @@ router.get('/current', requireAuth, async (req, res, next) => {
 })
 
 // Edit a Review
-const validateReview = [
-  check('review')
-    .exists({checkFalsy:true})
-    .withMessage("Review text is required"),
-  check('stars')
-    .exists({ checkFalsy: true })
-    .isInt({ min: 0, max: 5 })
-    .withMessage('Stars must be an integer from 1 to 5'),
-handleValidationErrors
-]
 router.put('/:id',validateReview, requireAuth, async (req, res, next) => {
   const specialReview = await Review.findByPk(req.params.id);
+  console.log("specialReview.userId: ", specialReview.userId);
+  console.log("req.user.id: ", req.user.id)
   if(specialReview.userId !== req.user.id){
-    const error = new Error('Forbidden');
-    error.status = 404;
-    next(error);
+    res.status = 404;
+    return res.json({
+      "message": "Forbidden"
+    })
   }
   if(!specialReview){
     res.status = 404;

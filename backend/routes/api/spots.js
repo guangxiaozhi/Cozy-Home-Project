@@ -2,13 +2,13 @@ const express = require('express');
 const {sequelize, Op } = require('sequelize')
 const router = express();
 const { Spot, Review, SpotImage, User, ReviewImage, Booking } = require('../../db/models');
-const { requireAuth } = require("../../utils/auth");
-const {handleValidationErrors} = require('../../utils/validation')
+const { validateReview, requireAuth } = require("../../utils/auth");
+const {handleValidationErrors} = require('../../utils/validation');
 const { check} = require("express-validator");
 
 
 // Get all Spots
-router.get('/', requireAuth, async (req, res, next)=> {
+router.get('/',  async (req, res, next)=> {
   const allSpots = await Spot.findAll({
     include:[
       {
@@ -234,7 +234,7 @@ router.get('/:id',requireAuth, async (req, res, next) => {
 })
 
 // Edit a spot
-router.put('/:id',requireAuth, async (req, res, next) => {
+router.put('/:id',requireAuth, validateSpot, async (req, res, next) => {
   const updateSpot = await Spot.findOne({
     where:{
       id: req.params.id
@@ -246,24 +246,13 @@ router.put('/:id',requireAuth, async (req, res, next) => {
       "message": "Spot couldn't be found"
     })
   }
-  const {address, city, state, country, lat, lng, name, description, price} = req.body;
-  if(!(address && city && state && country && lat && lng && name && description && price)){
-    res.status(400);
-    return res.json({
-      "message": "Validation Error",
-      "errors": [
-        "Street address is required",
-        "City is required",
-        "State is required",
-        "Country is required",
-        "Latitude is not valid",
-        "Longitude is not valid",
-        "Name must be less than 50 characters",
-        "Description is required",
-        "Price per day is required"
-      ]
-    })
+  if(updateSpot.ownerId !== req.user.id){
+    res.status = 403;
+    return res.json({"message": "Forbidden"})
+
   }
+  const {address, city, state, country, lat, lng, name, description, price} = req.body;
+
   updateSpot.update({
     address,
     city,
@@ -280,15 +269,7 @@ router.put('/:id',requireAuth, async (req, res, next) => {
 })
 
 // Create a Review for a Spot
-const validateReview = [
-  check('review')
-    .exists()
-    .withMessage("Review text is required"),
-  check('stars')
-    .exists()
-    .isInt({min:0, max:5})
-    .withMessage("Stars must be an integer from 1 to 5")
-];
+
 router.post('/:id/reviews', requireAuth, validateReview, async (req, res, next) => {
   const spot = await Spot.findOne({
     where:{
@@ -383,7 +364,10 @@ router.post('/:id/bookings', requireAuth, validateBooking, async (req, res, next
   if(spot.ownerId === req.user.id){
     res.status(403);
     return res.json({
-      "message": "Forbidden"
+      "message": "Forbidden",
+      "errors":[
+        "Spot must NOT belong to the current user"
+      ]
     })
   }
   const {startDate, endDate} = req.body;
@@ -467,6 +451,12 @@ router.get('/:id/bookings', requireAuth, async (req, res,next) => {
       model:User
     }
   });
+  if(bookings.length === 0){
+    res.status = 404;
+    return res.json({
+      "message": "This spot hasn't been booked."
+    })
+  }
   if(bookings[0].toJSON().userId !== req.user.id){
     const bookingsList = [];
     bookings.forEach(booking => {
