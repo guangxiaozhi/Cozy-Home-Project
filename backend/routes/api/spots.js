@@ -17,7 +17,8 @@ router.get('/', requireAuth, async (req, res, next)=> {
       {
         model:SpotImage
       }
-    ]
+    ],
+    order:['id']
   })
   const Spots = [];
   allSpots.forEach(spot => {
@@ -49,7 +50,7 @@ router.get('/current', requireAuth, async (req, res, next) =>{
   const allSpots = await Spot.findAll({
     where: {
       ownerId: userId
-  },
+    },
     include:[
       {
         model:Review
@@ -57,7 +58,8 @@ router.get('/current', requireAuth, async (req, res, next) =>{
       {
         model:SpotImage
       }
-    ]
+    ],
+    order:['id']
   })
   const Spots = [];
   allSpots.forEach(spot => {
@@ -351,7 +353,8 @@ router.get('/:id/reviews', requireAuth, async (req, res, next) => {
         model:ReviewImage,
         attributes:["id","url"]
       }
-    ]
+    ],
+    order:['id']
   })
   res.json(
     {
