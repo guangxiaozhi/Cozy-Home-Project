@@ -391,14 +391,13 @@ router.post('/:id/bookings', requireAuth, validateBooking, async (req, res, next
       ]
     })
   }
+  console.log(spot.id);
   const allBookings = await Booking.findAll({
     where:{
       spotId:spot.id
     }
   })
   allBookings.forEach(booking => {
-    booking.toJSON();
-    console.log("booking: ",booking.toJSON())
     const bookingStartDate = booking.startDate;
     const bookingEndDate = booking.endDate;
     console.log("bookingStartDate: ", bookingStartDate);
@@ -435,7 +434,7 @@ router.post('/:id/bookings', requireAuth, validateBooking, async (req, res, next
   const booking = await spot.createBooking({
     spotId:spot.id,
     userId:spot.ownerId,
-    startDate:startDate.toDate(),
+    startDate,
     endDate
   })
   res.json(booking)
