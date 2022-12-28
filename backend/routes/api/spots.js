@@ -467,7 +467,6 @@ router.get('/:id/bookings', requireAuth, async (req, res,next) => {
       model:User
     }
   });
-  console.log(bookings);
   if(bookings[0].toJSON().userId !== req.user.id){
     const bookingsList = [];
     bookings.forEach(booking => {
