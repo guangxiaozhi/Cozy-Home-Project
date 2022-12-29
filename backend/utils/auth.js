@@ -83,7 +83,7 @@ const validateBooking = [
     .withMessage('StartDate is required'),
   check('endDate')
     .exists({ checkFalsy: true })
-    .withMessage('StartDate is required'),
+    .withMessage('endDate is required'),
   handleValidationErrors
 ];
 

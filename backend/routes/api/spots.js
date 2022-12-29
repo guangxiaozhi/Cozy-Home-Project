@@ -164,6 +164,12 @@ router.post('/:id/images',requireAuth, async (req, res, next) => {
       id:spotId
     }
   })
+  if(spot.ownerId !== req.user.id){
+    res.status(403);
+    return res.json({
+      "message": "Forbidden"
+    })
+  }
   if(!spot){
     res.status(404);
     return res.json({
@@ -192,7 +198,7 @@ router.post('/:id/images',requireAuth, async (req, res, next) => {
 })
 
 // Get details for a Spot from an id
-router.get('/:id',requireAuth, async (req, res, next) => {
+router.get('/:id', async (req, res, next) => {
   const spot = await Spot.findOne({
     where:{
       id:req.params.id
@@ -269,7 +275,6 @@ router.put('/:id',requireAuth, validateSpot, async (req, res, next) => {
 })
 
 // Create a Review for a Spot
-
 router.post('/:id/reviews', requireAuth, validateReview, async (req, res, next) => {
   const spot = await Spot.findOne({
     where:{
@@ -312,7 +317,7 @@ router.post('/:id/reviews', requireAuth, validateReview, async (req, res, next) 
 })
 
 // Get Reviews by Spot Id
-router.get('/:id/reviews', requireAuth, async (req, res, next) => {
+router.get('/:id/reviews', async (req, res, next) => {
   const spot = await Spot.findByPk(req.params.id);
   if(!spot){
     res.status(404);
@@ -390,7 +395,7 @@ router.post('/:id/bookings', requireAuth, validateBooking, async (req, res, next
   allBookings.forEach(booked => {
     const bookedStartDate = booked.startDate;
     const bookedEndDate = booked.endDate;
-    if(bookedStartDate >= startDate && bookedStartDate < endDate){
+    if(startDate >= bookedStartDate && startDate < bookedEndDate){
       res.status(403);
       return res.json({
         "message": "Sorry, this spot is already booked for the specified dates",
@@ -398,7 +403,7 @@ router.post('/:id/bookings', requireAuth, validateBooking, async (req, res, next
           "Start date conflicts with an existing booking"
         ]
       })
-    }else if(bookedEndDate > startDate && bookedEndDate <= endDate){
+    }else if(endDate > bookedStartDate && endDate <= bookedEndDate){
       res.status(403);
       return res.json({
         "message": "Sorry, this spot is already booked for the specified dates",
@@ -406,7 +411,7 @@ router.post('/:id/bookings', requireAuth, validateBooking, async (req, res, next
           "End date conflicts with an existing booking"
         ]
       })
-    }else if(bookedStartDate < startDate && bookedEndDate > endDate){
+    }else if(startDate < bookedStartDate && endDate > bookedEndDate){
       res.status(403);
       return res.json({
         "message": "Sorry, this spot is already booked for the specified dates",
