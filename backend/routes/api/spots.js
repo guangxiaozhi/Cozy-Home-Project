@@ -118,7 +118,11 @@ console.log(where);
   });
 
 
-  res.json({Spots});
+  res.json({
+    "Spots": Spots,
+    "page": page,
+    "size":size
+  });
 })
 
 // Get Spots owned by the Current User
