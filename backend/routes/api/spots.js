@@ -476,4 +476,28 @@ router.get('/:id/bookings', requireAuth, async (req, res,next) => {
     res.json({"Bookings":bookings});
   }
 })
+
+// Delete a Spot
+router.delete('/:id', requireAuth, async (req, res, next) => {
+  const spot = await Spot.findByPk(req.params.id);
+  if(!spot){
+    res.status(404);
+    return res.json({
+      "message": "Spot couldn't be found"
+    })
+  }
+
+  if(spot.ownerId !== req.user.id){
+    res.status(403);
+    return res.json({
+      "message": "Forbidden"
+    })
+  }else{
+    await spot.destroy();
+    res.status(200);
+    return res.json({
+      "message": "Successfully deleted"
+    })
+  }
+})
 module.exports = router;
