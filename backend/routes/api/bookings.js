@@ -147,7 +147,7 @@ router.delete('/:id', requireAuth, async (req, res, next) => {
   }else if(new Date(booking.startDate) <= now){
     res.status(400);
     return res.json({
-      "message":"Cann't delete past booking"
+      "message":"Cann't delete current or past bookings"
     })
   }else{
     await booking.destroy();
