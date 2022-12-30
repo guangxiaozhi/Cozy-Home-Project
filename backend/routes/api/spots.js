@@ -435,7 +435,6 @@ router.get('/:id/reviews', async (req, res, next) => {
 })
 
 // Create a Booking Based on a Spot Id
-
 router.post('/:id/bookings', requireAuth, validateBooking, async (req, res, next) => {
   const spot = await Spot.findByPk(req.params.id);
   if(!spot){
@@ -478,36 +477,34 @@ router.post('/:id/bookings', requireAuth, validateBooking, async (req, res, next
       spotId:spot.id
     }
   })
+
+  const err = new Error("Sorry, this spot is already booked for the specified dates");
+  err.title = "Booking conflicts error";
+  err.status = 403;
+
+  // for(let booked of allBookings){
   allBookings.forEach(booked => {
     const bookedStartDate = booked.startDate;
     const bookedEndDate = booked.endDate;
     if(startDate >= bookedStartDate && startDate < bookedEndDate){
-      res.status(403);
-      return res.json({
-        "message": "Sorry, this spot is already booked for the specified dates",
-        "errors": [
-          "Start date conflicts with an existing booking"
-        ]
-      })
+
+      err.errors = ["Start date conflicts with an existing booking"];
+
     }else if(endDate > bookedStartDate && endDate <= bookedEndDate){
-      res.status(403);
-      return res.json({
-        "message": "Sorry, this spot is already booked for the specified dates",
-        "errors": [
-          "End date conflicts with an existing booking"
-        ]
-      })
+
+      err.errors = ["End date conflicts with an existing booking"];
+
     }else if(startDate < bookedStartDate && endDate > bookedEndDate){
-      res.status(403);
-      return res.json({
-        "message": "Sorry, this spot is already booked for the specified dates",
-        "errors": [
-          "Start date conflicts with an existing booking",
+
+      err.errors = [
+        "Start date conflicts with an existing booking",
           "End date conflicts with an existing booking"
         ]
-      })
     }
   })
+  if(err.errors){
+    return next(err);
+  }
   const booking = await spot.createBooking({
     spotId:spot.id,
     userId:spot.ownerId,
@@ -546,6 +543,7 @@ router.get('/:id/bookings', requireAuth, async (req, res,next) => {
     bookings.forEach(booking => {
       booking.toJSON();
       const bookingMessage = {
+        "id":booking.id,
         "spotId":booking.spotId,
         "startDate":booking.startDate,
         "endDate":booking.endDate
