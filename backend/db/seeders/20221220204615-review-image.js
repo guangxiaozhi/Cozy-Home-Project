@@ -16,12 +16,8 @@ const reviewImageSeed = [
     url:'sample.png'
   },
   {
-    reviewId:2,
-    url:'sample2.png'
-  },
-  {
     reviewId:3,
-    url:'sample.png'
+    url:'sample2.png'
   },
   {
     reviewId:4,
