@@ -232,6 +232,7 @@ router.post('/', [requireAuth, validateSpot], async (req, res, next)=>{
     description,
     price
   });
+  res.statusCode = 201;
   res.json(spot);
 
 });
