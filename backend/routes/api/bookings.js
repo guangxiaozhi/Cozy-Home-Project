@@ -145,9 +145,9 @@ router.delete('/:id', requireAuth, async (req, res, next) => {
       "message": "Forbidden"
     })
   }else if(new Date(booking.startDate) <= now){
-    res.status(400);
+    res.status(403);
     return res.json({
-      "message":"Cann't delete current or past bookings"
+      "message":"Bookings that have been started can't be deleted"
     })
   }else{
     await booking.destroy();
