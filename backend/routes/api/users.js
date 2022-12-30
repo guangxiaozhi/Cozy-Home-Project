@@ -49,7 +49,6 @@ router.post(
       res.status(403);
       res.json({
         "message": "User already exists",
-        "statusCode": 403,
         "errors": [
           "User with that email already exists"
         ]
@@ -65,7 +64,6 @@ router.post(
       res.status(403);
       res.json({
         "message": "User already exists",
-        "statusCode": 403,
         "errors": [
           "User with that username already exists"
         ]
@@ -76,7 +74,13 @@ router.post(
     await setTokenCookie(res, user);
 
     return res.json({
-      user: user
+      "user": {
+        "id": user.id,
+        "firstName": user.firstName,
+        "lastName": user.lastName,
+        "email": user.email,
+        "username": user.username
+      }
     });
   }
 );
