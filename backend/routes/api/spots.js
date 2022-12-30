@@ -86,9 +86,9 @@ console.log(where);
   const allSpots = await Spot.findAll({
     where,
     include:[
-      // {
-      //   model:Review,
-      // },
+      {
+        model:Review,
+      },
       {
         model:SpotImage
       }
@@ -107,14 +107,14 @@ console.log(where);
       }
     })
     delete spot.SpotImages;
-    // let i = 0;
-    // let count = 0;
-    // spot.Reviews.forEach(review =>{
-    //   i++;
-    //   count = count + review.stars;
-    // })
-    // spot.avgRating = count/i;
-    // delete spot.Reviews;
+    let i = 0;
+    let count = 0;
+    spot.Reviews.forEach(review =>{
+      i++;
+      count = count + review.stars;
+    })
+    spot.avgRating = count/i;
+    delete spot.Reviews;
   });
 
 
