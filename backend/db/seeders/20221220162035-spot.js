@@ -19,7 +19,7 @@ const spotseed = [
     price:245.6
   },
   {
-    ownerId:1,
+    ownerId:2,
     address:'987 756TH SE PL',
     city:'Santiago',
     state:'Caniforlia',
@@ -31,7 +31,7 @@ const spotseed = [
     price:24.56
   },
   {
-    ownerId:2,
+    ownerId:3,
     address:'184 94TH SE PL',
     city:'Jackson',
     state:'Wyoming',
@@ -43,7 +43,7 @@ const spotseed = [
     price:24.56
   },
   {
-    ownerId:3,
+    ownerId:4,
     address:'629 432TH SE PL',
     city:'Bellevue',
     state:'Washington',
@@ -69,5 +69,5 @@ module.exports = {
 
     options.tableName = 'Spots';
     await queryInterface.bulkDelete(options, { [Op.or]: spotseed }, {} )
-  } 
+  }
 };

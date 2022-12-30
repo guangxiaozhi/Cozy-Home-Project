@@ -14,20 +14,20 @@ const reviewseed = [
     stars:4
   },
   {
-    spotId:4,
-    userId:3,
+    spotId:2,
+    userId:2,
     review:"bad",
     stars:1
   },
   {
-    spotId:2,
-    userId:1,
+    spotId:3,
+    userId:3,
     review:"not good",
     stars:2
   },
   {
-    spotId:3,
-    userId:2,
+    spotId:4,
+    userId:4,
     review:"very good",
     stars:5
   }
