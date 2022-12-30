@@ -366,7 +366,7 @@ router.post('/:id/reviews', requireAuth, validateReview, async (req, res, next) 
     }
   })
   if (!spot){
-    res.status = 404;
+    res.status(404);
     return res.json({
       "message": "Spot couldn't be found"
     })
@@ -397,6 +397,7 @@ router.post('/:id/reviews', requireAuth, validateReview, async (req, res, next) 
     review,
     stars
   })
+  res.status(201)
   res.json(newReview);
 })
 
@@ -519,7 +520,7 @@ router.post('/:id/bookings', requireAuth, validateBooking, async (req, res, next
 router.get('/:id/bookings', requireAuth, async (req, res,next) => {
   const spot = await Spot.findByPk(req.params.id);
   if(!spot){
-    res.status = 404;
+    res.status(404);
     return res.json({
       "message": "Spot couldn't be found"
     })
@@ -529,11 +530,12 @@ router.get('/:id/bookings', requireAuth, async (req, res,next) => {
       spotId:req.params.id
     },
     include:{
-      model:User
+      model:User,
+      attributes: ["id", "firstName", "lastName"]
     }
   });
   if(bookings.length === 0){
-    res.status = 404;
+    res.status(404);
     return res.json({
       "message": "This spot hasn't been booked."
     })
