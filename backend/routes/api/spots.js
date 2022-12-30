@@ -151,6 +151,9 @@ router.get('/current', requireAuth, async (req, res, next) =>{
         spot.previewImage = spotImage.url;
       }
     })
+    if(!spot.previewImage){
+      spot.previewImage = "spot doesn't have spotImage"
+    }
     let i = 0;
     let count = 0;
     spot.Reviews.forEach(review =>{
