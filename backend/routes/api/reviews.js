@@ -89,7 +89,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
   })
   res.json(
     {
-      "reviews": reviewsList
+      "Reviews": reviewsList
     }
   );
 })
