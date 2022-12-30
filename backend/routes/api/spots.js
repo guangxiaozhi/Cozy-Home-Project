@@ -543,7 +543,6 @@ router.get('/:id/bookings', requireAuth, async (req, res,next) => {
     bookings.forEach(booking => {
       booking.toJSON();
       const bookingMessage = {
-        "id":booking.id,
         "spotId":booking.spotId,
         "startDate":booking.startDate,
         "endDate":booking.endDate
