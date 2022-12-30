@@ -232,6 +232,7 @@ router.post('/', [requireAuth, validateSpot], async (req, res, next)=>{
     description,
     price
   });
+  res.statusCode = 201;
   res.json(spot);
 
 });
@@ -245,18 +246,19 @@ router.post('/:id/images',requireAuth, async (req, res, next) => {
       id:spotId
     }
   })
+  if(!spot){
+    res.status(404);
+    return res.json({
+      message:"spot couldn't be find"
+    })
+  }
   if(spot.ownerId !== req.user.id){
     res.status(403);
     return res.json({
       "message": "Forbidden"
     })
   }
-  if(!spot){
-    res.status(404);
-    return res.json({
-      message:"spot couldn't find"
-    })
-  }
+
   let newImage;
   if(spot.ownerId !== req.user.id){
     res.status(400);
@@ -328,13 +330,13 @@ router.put('/:id',requireAuth, validateSpot, async (req, res, next) => {
     }
   })
   if(!updateSpot){
-    res.status = 404;
+    res.status(404);
     return res.json({
       "message": "Spot couldn't be found"
     })
   }
   if(updateSpot.ownerId !== req.user.id){
-    res.status = 403;
+    res.status(403);
     return res.json({"message": "Forbidden"})
 
   }
@@ -351,6 +353,7 @@ router.put('/:id',requireAuth, validateSpot, async (req, res, next) => {
     description,
     price
   })
+
 
   res.json(updateSpot)
 })
