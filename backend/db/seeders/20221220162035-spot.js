@@ -7,6 +7,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 const spotseed = [
   {
+    id:1,
     ownerId:1,
     address:'137 321TH SE PL',
     city:'Honolulu',
@@ -19,6 +20,7 @@ const spotseed = [
     price:245.6
   },
   {
+    id:2,
     ownerId:2,
     address:'987 756TH SE PL',
     city:'Santiago',
@@ -31,6 +33,7 @@ const spotseed = [
     price:24.56
   },
   {
+    id:3,
     ownerId:3,
     address:'184 94TH SE PL',
     city:'Jackson',
@@ -43,6 +46,7 @@ const spotseed = [
     price:24.56
   },
   {
+    id:4,
     ownerId:4,
     address:'629 432TH SE PL',
     city:'Bellevue',
