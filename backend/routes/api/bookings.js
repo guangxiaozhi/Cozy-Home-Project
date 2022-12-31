@@ -87,40 +87,32 @@ router.put('/:id', requireAuth, validateBooking, async (req, res, next) => {
       spotId:updateBooking.spotId
     }
   })
+
+  const err = new Error("Sorry, this spot is already booked for the specified dates");
+  err.title = "Booking conflicts error";
+  err.status = 403;
+
   bookingsSpecialSpot.forEach(booked => {
     if(booked.id !== updateBooking.id){
       const bookedStartDate = booked.startDate;
       const bookedEndDate = booked.endDate;
-      console.log("bookedStartDate: ", bookedStartDate);
-      console.log("bookedEndDate", bookedEndDate);
       if(startDate >= bookedStartDate && startDate < bookedEndDate){
-        res.status(403);
-        return res.json({
-          "message": "Sorry, this spot is already booked for the specified dates",
-          "errors": [
-            "Start date conflicts with an existing booking"
-          ]
-        })
+        err.errors = ["Start date conflicts with an existing booking"];
       }else if(endDate > bookedStartDate && endDate <= bookedEndDate){
-        res.status(403);
-        return res.json({
-          "message": "Sorry, this spot is already booked for the specified dates",
-          "errors": [
-            "End date conflicts with an existing booking"
-          ]
-        })
+        err.errors = ["End date conflicts with an existing booking"];
       }else if(startDate < bookedStartDate && endDate > bookedEndDate){
-        res.status(403);
-        return res.json({
-          "message": "Sorry, this spot is already booked for the specified dates",
-          "errors": [
-            "Start date conflicts with an existing booking",
+        err.errors = [
+          "Start date conflicts with an existing booking",
             "End date conflicts with an existing booking"
           ]
-        })
       }
     }
   })
+
+  if(err.errors){
+    return next(err);
+  }
+  
   updateBooking.update({
     startDate,
     endDate
