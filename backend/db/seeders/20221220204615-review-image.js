@@ -8,18 +8,22 @@ if (process.env.NODE_ENV === 'production') {
 
 const reviewImageSeed = [
   {
+    id:1,
     reviewId:1,
     url:'sample.png'
   },
   {
+    id:2,
     reviewId:2,
     url:'sample.png'
   },
   {
+    id:3,
     reviewId:3,
     url:'sample2.png'
   },
   {
+    id:4,
     reviewId:4,
     url:'sample.png'
   }
