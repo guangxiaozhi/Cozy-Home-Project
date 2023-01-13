@@ -8,28 +8,24 @@ if (process.env.NODE_ENV === 'production') {
 
 const reviewseed = [
   {
-    id:1,
     spotId:1,
     userId:1,
     review:"good",
     stars:4
   },
   {
-    id:2,
     spotId:2,
     userId:2,
     review:"bad",
     stars:1
   },
   {
-    id:3,
     spotId:3,
     userId:3,
     review:"not good",
     stars:2
   },
   {
-    id:4,
     spotId:4,
     userId:4,
     review:"very good",

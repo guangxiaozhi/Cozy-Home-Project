@@ -10,28 +10,28 @@ if (process.env.NODE_ENV === 'production') {
 const bookingSeeds = [
   {
     id:1,
-    spotId:1,
+    spotId:2,
     userId:1,
     startDate:'2022-01-17',
     endDate:'2022-01-23'
   },
   {
     id:2,
-    spotId:2,
+    spotId:3,
     userId:2,
     startDate:'2022-04-08',
     endDate:'2022-04-20'
   },
   {
     id:3,
-    spotId:3,
+    spotId:4,
     userId:3,
     startDate:'2023-03-21',
     endDate:'2023-03-30'
   },
   {
     id:4,
-    spotId:4,
+    spotId:1,
     userId:4,
     startDate:'2023-07-18',
     endDate:'2023-08-01'

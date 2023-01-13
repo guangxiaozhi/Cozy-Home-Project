@@ -7,25 +7,21 @@ if (process.env.NODE_ENV === 'production') {
 }
 const spotImageSeeds = [
   {
-    id:1,
     spotId:1,
     url:'spot1.png',
     preview:true
   },
   {
-    id:2,
     spotId:2,
     url:'spot2.png',
     preview:false
   },
   {
-    id:3,
     spotId:3,
     url:'spot3.png',
     preview:false
   },
   {
-    id:4,
     spotId:4,
     url:'spot4.png',
     preview:true
