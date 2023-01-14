@@ -7,7 +7,7 @@ export default function GetSpotDetails(){
   const dispatch = useDispatch();
 
   const {spotId} = useParams();
-  const spot = useSelector(state =>  Object.values(state.spots.allSpots)[spotId - 1])
+  const spot = useSelector(state => state.spots.singleSpot)
 
   useEffect(() => {
     dispatch(fetchOneSpot(+spotId));
@@ -16,7 +16,7 @@ export default function GetSpotDetails(){
 
   return (
     <div>
-      {spot && (
+      {spot && spot.SpotImages && (
         <div>
           <div>
             <h1>{spot.name}</h1>
@@ -28,7 +28,9 @@ export default function GetSpotDetails(){
             </div>
           </div>
           <div>
-            <img style={{ height: "400px",width: "400px"}} src={spot.previewImage} />
+
+              <img style={{ height: "400px",width: "400px"}} src={spot.SpotImages[0].url} />
+
           </div>
         </div>
       )}
