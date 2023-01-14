@@ -7,22 +7,22 @@ import './allSpots.css'
 export default function GetAllSpots(){
   const dispatch = useDispatch();
   const history = useHistory();
-  const allSpots = useSelector(state =>{
-    return Object.values(state.spots.allSpots)}
-
-  )
+  const allSpots = useSelector(state => Object.values(state.spots.allSpots))
 
   useEffect(() => {
-    dispatch(fetchAllSpots(dispatch));
-}, [dispatch]);
+    dispatch(fetchAllSpots());
+    }, [dispatch]);
 
+  const handleClick = (spotId) => {
+    history.push(`/spots/${spotId}`)
+  }
   return (
     <div>
       {allSpots && (
         allSpots.map(spot => (
           <div key={spot.id}>
             <div>
-              <img style={{ height: "400px",width: "400px"}} src={spot.previewImage} ></img>
+              <img style={{ height: "400px",width: "400px"}} src={spot.previewImage} onClick={() => handleClick(spot.id)}></img>
               {/* <img  id="spots-card" src={spot.previewImage} ></img> */}
             </div>
             <div>
