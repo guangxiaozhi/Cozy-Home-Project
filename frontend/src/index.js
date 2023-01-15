@@ -4,6 +4,7 @@ import './index.css';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App';
+import { ModalProvider, Modal  } from './context/Modal'
 
 import configureStore from './store';
 
@@ -24,11 +25,15 @@ if (process.env.NODE_ENV !== 'production') {
 
 function Root(){
   return (
-    <Provider store={store}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </Provider>
+    <ModalProvider>
+      <Provider store={store}>
+        <BrowserRouter>
+          <App />
+          <Modal />
+        </BrowserRouter>
+      </Provider>
+    </ModalProvider>
+
   );
 }
 
