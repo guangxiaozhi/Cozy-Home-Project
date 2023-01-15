@@ -12,13 +12,13 @@ export default function CreateNewSpot(){
   const [city, setCity] = useState("");
   const [state,setState] = useState("");
   const [country, setCountry] = useState("");
-  const [lat, setLat] = useState("");
-  const [lng, setLng] = useState("");
+  const [lat, setLat] = useState(1232);
+  const [lng, setLng] = useState(54);
   const [name, setName] = useState("");
   const [description, setDeacription] = useState("");
   const [price, setPrice] = useState();
   const [url, setUrl] = useState();
-  const [preview, setPreview] = useState();
+  const [preview, setPreview] = useState(true);
   const [errors, setErrors] = useState([]);
 
 
@@ -40,27 +40,28 @@ export default function CreateNewSpot(){
       url,
       preview
     }
-    dispatch(createOneSpot(spot,spotImage))
+    const newSpot = await dispatch(createOneSpot(spot,spotImage))
     .catch(async (res) => {
       const data = await res.json();
       if (data && data.errors) setErrors(data.errors);
     });
-    // history.push(`/spot/${spot.id}`)
+    console.log("newSpot", newSpot)
+    history.push(`/spots/${newSpot["id"]}`)
   }
 
-  const demoCreateClick = () => {
-    setAddress("123 Disney Lane");
-    setCity("San Francisco");
-    setState("California");
-    setCountry("United States of America");
-    setName("App Academy");
-    setDeacription("Place where web developers are created");
-    setPrice(123)
-    setLat(234);
-    setLng(234);
-    setUrl("https://a0.muscache.com/im/pictures/38b82167-80e2-4e2c-9609-b159a7fb235b.jpg?im_w=1200");
-    setPreview(true)
-  }
+  // const demoCreateClick = () => {
+  //   setAddress("123 Disney Lane");
+  //   setCity("San Francisco");
+  //   setState("California");
+  //   setCountry("United States of America");
+  //   setName("App Academy");
+  //   setDeacription("Place where web developers are created");
+  //   setPrice(123)
+  //   setLat(234);
+  //   setLng(234);
+  //   setUrl("https://a0.muscache.com/im/pictures/38b82167-80e2-4e2c-9609-b159a7fb235b.jpg?im_w=1200");
+  //   setPreview(true)
+  // }
   return (
     <>
       <h1>Create new spot</h1>
@@ -131,9 +132,18 @@ export default function CreateNewSpot(){
             required
           />
         </label>
+        <label>
+          Url:
+          <input
+            type="text"
+            value={url}
+            onChange={(e) => setUrl(e.target.value)}
+            required
+          />
+        </label>
 
         <button type="submit">create</button>
-        <button onClick={demoCreateClick}>demoCreate</button>
+        {/* <button onClick={demoCreateClick}>demoCreate</button> */}
       </form>
     </>
   )

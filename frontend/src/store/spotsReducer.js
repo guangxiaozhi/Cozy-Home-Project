@@ -43,23 +43,52 @@ const CREATE_NEW_SPOT = 'spots/CREATE_NEW_SPOT';
 export const createNewSpot = (spot) =>{
   return {
     type:CREATE_NEW_SPOT,
-    newSpot:spot
+    spot
   }
 }
 
-export const createOneSpot = (spot,) => async (dispatch) => {
+export const createOneSpot = (spot,spotImage) => async (dispatch) => {
   const res = await csrfFetch("/api/spots",{
     method:"POST",
     header:{"Content-Type":"application/json"},
     body:JSON.stringify(spot)
   })
-
   if(res.ok){
-    const newSpot = await res.json();
-    console.log("createOneSpot result:", newSpot.id)
-    await dispatch(createNewSpot(newSpot));
-    return newSpot
+    let newSpot = await res.json();
+
+    const spot = await csrfFetch(`/api/spots/${newSpot.id}`)
+    if (spot.ok){
+      newSpot = await spot.json()
+
+      spotImage.spotId = newSpot.id;
+      const spotImageRes = await csrfFetch(`/api/spots/${newSpot.id}/images`, {
+        method:"POST",
+        header:{"Content-Type":"application/json"},
+        body:JSON.stringify(spotImage)
+      })
+      if(spotImageRes.ok){
+        const finalspot = await csrfFetch(`/api/spots/${newSpot.id}`)
+        if(finalspot.ok){
+          newSpot = await finalspot.json();
+          await dispatch(createNewSpot(newSpot));
+          return newSpot;
+        }
+      }
+    }
   }
+}
+
+//Delete a spot
+const DELETE_SPOT = 'spots/DELETE_SPOT';
+export const deleteSpot = (spotId) =>{
+  return {
+    type:DELETE_SPOT,
+    spotId
+  }
+}
+
+export const deleteOneSpot = () => async (dispatch) =>{
+  dispatch(deleteSpot(1))
 }
 
 const normalize = (spots) => {
@@ -74,7 +103,7 @@ const initialState = {
 }
 
 const spotReducer = (state = initialState, action) => {
-  let newState = {...state};
+  const newState = {...state};
   switch (action.type) {
     case LOAD_ALL_SPOTS:
       newState.allSpots = normalize(action.spots)
@@ -85,9 +114,9 @@ const spotReducer = (state = initialState, action) => {
       return newState;
 
     case CREATE_NEW_SPOT:
-      console.log("newState before add spot:  ", newState.allSpots)
-      console.log("create new spot reducer::::::::", action)
-      newState.allSpots[action.newSpot.id] = action.newSpot;
+      const newSpot = action.spot;
+      newState.allSpots[newSpot['id']] = newSpot;
+      newState.singleSpot = newSpot;
       return newState;
     default:
       return state;
