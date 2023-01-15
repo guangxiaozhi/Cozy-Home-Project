@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
 import CreateNewSpot from '../../components/Spots/CreateNewSpot';
@@ -7,7 +7,11 @@ import './Navigation.css';
 
 function Navigation({ isLoaded }){
   const sessionUser = useSelector(state => state.session.user);
+  const history = useHistory();
 
+  const handleClick = (spotId) => {
+    history.push("/spots")
+  }
   return (
     <ul>
       <li>
@@ -19,7 +23,7 @@ function Navigation({ isLoaded }){
         </li>
       )}
       <li>
-        <NavLink to="/spots"><CreateNewSpot /></NavLink>
+        <NavLink to="/spots/newSpot">Create New Spot</NavLink>
       </li>
     </ul>
   );
