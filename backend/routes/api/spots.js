@@ -80,7 +80,6 @@ router.get('/', validateQuery, async (req, res, next)=> {
   }else if(minPrice && maxPrice){
     where.price = {[Op.between]:[+minPrice, +maxPrice]};
   }
-console.log(where);
   const allSpots = await Spot.findAll({
     where,
     include:[
@@ -146,7 +145,6 @@ router.get('/current', requireAuth, async (req, res, next) =>{
   })
   Spots.forEach((spot) => {
     spot.SpotImages.forEach(spotImage =>{
-      console.log(spotImage.url);
       if (spotImage.url){
         spot.previewImage = spotImage.url;
       }
@@ -158,7 +156,6 @@ router.get('/current', requireAuth, async (req, res, next) =>{
     let count = 0;
     spot.Reviews.forEach(review =>{
       i++;
-      console.log(review);
       count = count + review.stars;
     })
     if(i === 0){
