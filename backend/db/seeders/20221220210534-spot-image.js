@@ -8,7 +8,7 @@ if (process.env.NODE_ENV === 'production') {
 const spotImageSeeds = [
   {
     spotId:1,
-    url:'spot1.png',
+    url:'https://www.urbanrealm.com/images/buildings/building_1268.jpg',
     preview:true
   },
   {
