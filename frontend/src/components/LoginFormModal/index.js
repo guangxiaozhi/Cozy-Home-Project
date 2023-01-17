@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import * as sessionActions from '../../store/session';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useModal } from "../../context/Modal";
+import { Redirect } from 'react-router-dom'
 import './LoginForm.css';
 
 function LoginFormModal() {
@@ -11,6 +12,14 @@ function LoginFormModal() {
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState([]);
 
+  const seesionUser = useSelector(state => {console.log("state      loginForm",state)
+    return state.session.user
+  })
+  if(seesionUser){
+    return (<Redirect to='/' />)
+  }
+
+  //check session user.if exit, return Redirect('/')
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -22,6 +31,10 @@ function LoginFormModal() {
       });
   }
 
+  const handleClick = () => {
+    setCredential("Demo-lition");
+    setPassword("password")
+  }
   return (
     <>
       <h1>Log In</h1>
@@ -48,6 +61,7 @@ function LoginFormModal() {
           />
         </label>
         <button type="submit">Log In</button>
+        <button onClick={handleClick}>demo-user</button>
       </form>
     </>
 
