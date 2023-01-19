@@ -1,31 +1,28 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import {useHistory} from 'react-router-dom';
-import { createOneSpot } from '../../../store/spotsReducer';
-import './createNewSpot.css';
-
-export default function CreateNewSpot(){
-
+import { useDispatch, useSelector } from "react-redux";
+import {useHistory, useParams} from 'react-router-dom';
+import { updateOneSpot } from "../../../store/spotsReducer";
+export default function EditSpot(){
+  const {spotId} = useParams();
+  const spot = useSelector(state => state.spots.allSpots[spotId])
   const dispatch = useDispatch();
   const history = useHistory();
-  const [address, setAddress] = useState("");
-  const [city, setCity] = useState("");
-  const [state,setState] = useState("");
-  const [country, setCountry] = useState("");
+
+  const [address, setAddress] = useState(spot.address);
+  const [city, setCity] = useState(spot.city);
+  const [state,setState] = useState(spot.state);
+  const [country, setCountry] = useState(spot.country);
   const [lat, setLat] = useState(1232);
   const [lng, setLng] = useState(54);
-  const [name, setName] = useState("");
-  const [description, setDeacription] = useState("");
-  const [price, setPrice] = useState();
-  const [url, setUrl] = useState();
-  const [preview, setPreview] = useState(true);
+  const [name, setName] = useState(spot.name);
+  const [description, setDeacription] = useState(spot.description);
+  const [price, setPrice] = useState(spot.price);
   const [errors, setErrors] = useState([]);
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setErrors([]);
-    const spot = {
+    const updateSpot = {
       address,
       city,
       state,
@@ -36,11 +33,7 @@ export default function CreateNewSpot(){
       description,
       price
     };
-    const spotImage = {
-      url,
-      preview
-    }
-    const newSpot = await dispatch(createOneSpot(spot,spotImage))
+    const newSpot = await dispatch(updateOneSpot(updateSpot,spotId))
     .catch(async (res) => {
       const data = await res.json();
       if (data && data.errors) setErrors(data.errors);
@@ -49,9 +42,9 @@ export default function CreateNewSpot(){
   }
 
   return (
-    <>
-      <h1>Create new spot</h1>
-      <form onSubmit={handleSubmit} className="CreateNewSpotForm">
+    <div>
+      <h1>Edit Spot</h1>
+      <form onSubmit={handleSubmit}  className="CreateNewSpotForm">
         <ul>
           {errors.map((error, idx) => <li key={idx}>{error}</li>)}
         </ul>
@@ -118,17 +111,8 @@ export default function CreateNewSpot(){
             required
           />
         </label>
-        <label>
-          Url:
-          <input
-            type="text"
-            value={url}
-            onChange={(e) => setUrl(e.target.value)}
-            required
-          />
-        </label>
-        <button type="submit">create</button>
+        <button type="submit">Edit</button>
       </form>
-    </>
+    </div>
   )
 }

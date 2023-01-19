@@ -216,6 +216,7 @@ const validateSpot = [
   handleValidationErrors
 ];
 router.post('/', [requireAuth, validateSpot], async (req, res, next)=>{
+
   const {user} = req;
   const {address, city, state, country, lat, lng, name ,description, price} = req.body;
   const spot = await Spot.create({
