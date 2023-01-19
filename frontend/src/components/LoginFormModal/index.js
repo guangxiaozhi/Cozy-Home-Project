@@ -7,14 +7,13 @@ import './LoginForm.css';
 
 function LoginFormModal() {
   const dispatch = useDispatch();
+  const { closeModal } = useModal();
 
   const [credential, setCredential] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState([]);
 
-  const seesionUser = useSelector(state => {console.log("state      loginForm",state)
-    return state.session.user
-  })
+  const seesionUser = useSelector(state => state.session.user)
   if(seesionUser){
     return (<Redirect to='/' />)
   }
@@ -31,9 +30,14 @@ function LoginFormModal() {
       });
   }
 
-  const handleClick = () => {
-    setCredential("Demo-lition");
-    setPassword("password")
+  const demoUserClick = (e) => {
+    e.preventDefault();
+    setErrors([]);
+    return dispatch(sessionActions.login({ credential:"Demo-lition", password:"password" })).then(closeModal())
+      .catch(async (res) => {
+        const data = await res.json();
+        if (data && data.errors) setErrors(data.errors);
+      });
   }
   return (
     <>
@@ -61,7 +65,7 @@ function LoginFormModal() {
           />
         </label>
         <button type="submit">Log In</button>
-        <button onClick={handleClick}>demo-user</button>
+        <button onClick={demoUserClick}>demo-user</button>
       </form>
     </>
 

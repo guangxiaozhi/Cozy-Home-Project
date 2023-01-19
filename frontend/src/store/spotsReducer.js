@@ -1,11 +1,11 @@
 import {csrfFetch} from './csrf';
 
-const LOAD_ALLSPOTS = 'spots/LOAD_ALLSPOTS';
-
+// Get all spots
 // action creators
+const LOAD_ALL_SPOTS = 'spots/LOAD_ALL_SPOTS';
 export const loadAllSpots = (spots) => {
   return {
-    type:LOAD_ALLSPOTS,
+    type:LOAD_ALL_SPOTS,
     spots
   }
 }
@@ -20,6 +20,78 @@ export const fetchAllSpots = () =>  async (dispatch) => {
   }
 }
 
+// get one spot details
+const GET_SPOT_DETAILS = 'spots/GET_SPOT_DETAILS';
+export const loadOneSpot = (singlespot) =>{
+  return {
+    type:GET_SPOT_DETAILS,
+    singlespot
+  }
+}
+
+export const fetchOneSpot = (spotId) =>  async (dispatch) => {
+  const res = await csrfFetch(`/api/spots/${spotId}`);
+  if(res.ok){
+    const specialSpot = await res.json();
+    await dispatch(loadOneSpot(specialSpot));
+    return specialSpot;
+  }
+}
+
+// Create a new spot
+const CREATE_NEW_SPOT = 'spots/CREATE_NEW_SPOT';
+export const createNewSpot = (spot) =>{
+  return {
+    type:CREATE_NEW_SPOT,
+    spot
+  }
+}
+
+export const createOneSpot = (spot,spotImage) => async (dispatch) => {
+  const res = await csrfFetch("/api/spots",{
+    method:"POST",
+    header:{"Content-Type":"application/json"},
+    body:JSON.stringify(spot)
+  })
+  if(res.ok){
+      const newSpot = await res.json();
+      spotImage.spotId = newSpot.id;
+      const spotImageRes = await csrfFetch(`/api/spots/${newSpot.id}/images`, {
+        method:"POST",
+        header:{"Content-Type":"application/json"},
+        body:JSON.stringify(spotImage)
+      })
+      if(spotImageRes.ok){
+        const finalspot = await csrfFetch(`/api/spots/${newSpot.id}`)
+        if(finalspot.ok){
+          const newSpotWithImage = await finalspot.json();
+          await dispatch(createNewSpot(newSpotWithImage));
+          return newSpotWithImage;
+        }
+      }
+    // }
+  }
+}
+
+//Delete a spot
+const DELETE_SPOT = 'spots/DELETE_SPOT';
+export const deleteSpot = (spotId) =>{
+  return {
+    type:DELETE_SPOT,
+    spotId
+  }
+}
+
+export const deleteOneSpot = (spotId) => async (dispatch) =>{
+  const res = await csrfFetch(`/api/spots/${spotId}`,{
+    method:"DELETE"
+  })
+  if(res.ok){
+    dispatch(deleteSpot(spotId))
+  }
+
+}
+
 const normalize = (spots) => {
   const spotDate = {};
   spots.Spots.forEach(spot => spotDate[spot.id] = spot);
@@ -32,11 +104,33 @@ const initialState = {
 }
 
 const spotReducer = (state = initialState, action) => {
+  const newState = {...state};
   switch (action.type) {
-    case LOAD_ALLSPOTS:
-      const newState = {...state};
+    case LOAD_ALL_SPOTS:
       newState.allSpots = normalize(action.spots)
+      newState.singleSpot = {};
       return newState;
+
+    case  GET_SPOT_DETAILS:
+      newState.singleSpot = {...action.singlespot}
+      return newState;
+
+    case CREATE_NEW_SPOT:
+      const newSpot = action.spot;
+      newState.allSpots[newSpot['id']] = newSpot;
+      newState.singleSpot = newSpot;
+      return newState;
+
+    case DELETE_SPOT:
+      console.log("delete reducer allSpots before delete", newState.allSpots)
+      console.log("action.spotId", action.spotId)
+      delete newState.allSpots[action.spotId];
+      console.log("delete reducer allSpots after delete", newState.allSpots)
+      console.log("newState after delete", newState)
+      newState.singleSpot = {};
+      console.log("newState after delete singleSpot", newState)
+      return newState
+
     default:
       return state;
   }
