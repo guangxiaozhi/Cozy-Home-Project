@@ -16,13 +16,13 @@ export default function GetSpotDetails(){
     dispatch(fetchOneSpot(+spotId));
   }, [dispatch]);
 
-  const handleDelete = (e) => {
+  const handleEdit = (e) => {
     history.push('/Spots/:SpotId/edit')
   }
 
-  const handleEdit = async (e) => {
-    await dispatch(deleteOneSpot(spotId))
-    history.push('/spots')
+  const handleDelete =  (e) => {
+    dispatch(deleteOneSpot(spotId))
+    history.push('/')
   }
   return (
     <div>
@@ -39,7 +39,7 @@ export default function GetSpotDetails(){
               {sessionUser && sessionUser.id === spot.ownerId && (
                 <>
                   <button onClick={handleEdit}>Edit</button>
-                  {/* <button onClick={handleDelete}>Delete</button> */}
+                  <button onClick={handleDelete}>Delete</button>
                 </>
               )}
             </div>

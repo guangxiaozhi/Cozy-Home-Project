@@ -54,12 +54,7 @@ export const createOneSpot = (spot,spotImage) => async (dispatch) => {
     body:JSON.stringify(spot)
   })
   if(res.ok){
-    let newSpot = await res.json();
-
-    const spot = await csrfFetch(`/api/spots/${newSpot.id}`)
-    if (spot.ok){
-      newSpot = await spot.json()
-
+      const newSpot = await res.json();
       spotImage.spotId = newSpot.id;
       const spotImageRes = await csrfFetch(`/api/spots/${newSpot.id}/images`, {
         method:"POST",
@@ -69,12 +64,12 @@ export const createOneSpot = (spot,spotImage) => async (dispatch) => {
       if(spotImageRes.ok){
         const finalspot = await csrfFetch(`/api/spots/${newSpot.id}`)
         if(finalspot.ok){
-          newSpot = await finalspot.json();
-          await dispatch(createNewSpot(newSpot));
-          return newSpot;
+          const newSpotWithImage = await finalspot.json();
+          await dispatch(createNewSpot(newSpotWithImage));
+          return newSpotWithImage;
         }
       }
-    }
+    // }
   }
 }
 
@@ -87,8 +82,14 @@ export const deleteSpot = (spotId) =>{
   }
 }
 
-export const deleteOneSpot = () => async (dispatch) =>{
-  dispatch(deleteSpot(1))
+export const deleteOneSpot = (spotId) => async (dispatch) =>{
+  const res = await csrfFetch(`/api/spots/${spotId}`,{
+    method:"DELETE"
+  })
+  if(res.ok){
+    dispatch(deleteSpot(spotId))
+  }
+
 }
 
 const normalize = (spots) => {
@@ -107,6 +108,7 @@ const spotReducer = (state = initialState, action) => {
   switch (action.type) {
     case LOAD_ALL_SPOTS:
       newState.allSpots = normalize(action.spots)
+      newState.singleSpot = {};
       return newState;
 
     case  GET_SPOT_DETAILS:
@@ -118,6 +120,17 @@ const spotReducer = (state = initialState, action) => {
       newState.allSpots[newSpot['id']] = newSpot;
       newState.singleSpot = newSpot;
       return newState;
+
+    case DELETE_SPOT:
+      console.log("delete reducer allSpots before delete", newState.allSpots)
+      console.log("action.spotId", action.spotId)
+      delete newState.allSpots[action.spotId];
+      console.log("delete reducer allSpots after delete", newState.allSpots)
+      console.log("newState after delete", newState)
+      newState.singleSpot = {};
+      console.log("newState after delete singleSpot", newState)
+      return newState
+
     default:
       return state;
   }
