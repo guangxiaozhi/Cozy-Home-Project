@@ -4,6 +4,7 @@ import {useHistory, Link, useParams, Redirect} from 'react-router-dom';
 import {fetchOneSpot, deleteOneSpot} from '../../../store/spotsReducer';
 
 
+
 export default function GetSpotDetails(){
   const dispatch = useDispatch();
   const history = useHistory();
@@ -11,13 +12,12 @@ export default function GetSpotDetails(){
   const {spotId} = useParams();
   const spot = useSelector(state => state.spots.singleSpot)
   const sessionUser = useSelector(state => state.session.user)
-
   useEffect(() => {
     dispatch(fetchOneSpot(+spotId));
   }, [dispatch]);
 
   const handleEdit = (e) => {
-    history.push('/Spots/:SpotId/edit')
+    history.push(`/spots/${spotId}/edit`)
   }
 
   const handleDelete =  (e) => {
