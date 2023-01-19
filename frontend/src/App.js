@@ -23,14 +23,14 @@ function App() {
          <Route exact path="/">
             <GetAllSpots />
           </Route>
-          <Route exact path="/spots/newSpot">
+          <Route path="/spots/newSpot">
             <CreateNewSpot />
+          </Route>
+          <Route exact path="/spots/:spotId/edit">
+            <EditSpot />
           </Route>
           <Route path="/spots/:spotId">
             <GetSpotDetails />
-          </Route>
-          <Route exact path="/Spots/:SpotId/edit">
-            <EditSpot />
           </Route>
     </Switch>
     )}
