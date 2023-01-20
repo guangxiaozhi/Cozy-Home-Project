@@ -359,6 +359,7 @@ router.put('/:id',requireAuth, validateSpot, async (req, res, next) => {
 
 // Create a Review for a Spot
 router.post('/:id/reviews', requireAuth, validateReview, async (req, res, next) => {
+  const {user} = req;
   const spot = await Spot.findOne({
     where:{
       id:req.params.id
@@ -375,7 +376,7 @@ router.post('/:id/reviews', requireAuth, validateReview, async (req, res, next) 
     where:{
       [Op.and]:[
         {
-          userId:spot.ownerId
+          userId:user.id
         },
         {
           spotId:req.params.id
@@ -383,6 +384,7 @@ router.post('/:id/reviews', requireAuth, validateReview, async (req, res, next) 
       ]
     }
   })
+  console.log(existReview);
   if(existReview){
     res.status(403)
     return res.json({
@@ -391,7 +393,7 @@ router.post('/:id/reviews', requireAuth, validateReview, async (req, res, next) 
   }
 
   const newReview = await spot.createReview({
-    userId:spot.ownerId,
+    userId:user.id,
     spotId:req.params.id,
     review,
     stars
