@@ -13,7 +13,7 @@ function Navigation({ isLoaded }){
     history.push("/spots")
   }
   return (
-    <ul>
+    <ul className='navigation'>
       <li>
         <NavLink exact to="/">Home</NavLink>
       </li>

@@ -2,7 +2,8 @@ import {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {useHistory, Link, useParams, Redirect} from 'react-router-dom';
 import {fetchOneSpot, deleteOneSpot} from '../../../store/spotsReducer';
-
+import GetAllReviews from '../../Reviews/GetAllReviews';
+import './singleSpotPage.css'
 
 
 export default function GetSpotDetails(){
@@ -33,19 +34,22 @@ export default function GetSpotDetails(){
             <h2>{spot.name}</h2>
             <div>
               <div>
-                <span>avgRating: ({spot.avgRating}) </span>
-                <span>{spot.city},{spot.state}, {spot.country}</span>
+                <span>avgRating:( {spot.avgStarRating ? spot.avgStarRating:"new"} )</span>
+                <span> {spot.city}, {spot.state}, {spot.country}</span>
               </div>
               {sessionUser && sessionUser.id === spot.ownerId && (
-                <>
-                  <button onClick={handleEdit}>Edit</button>
-                  <button onClick={handleDelete}>Delete</button>
-                </>
+                <div className='Edit_Delete_container'>
+                  <button onClick={handleEdit}>Edit Spot</button>
+                  <button onClick={handleDelete}>Delete Spot</button>
+                </div>
               )}
             </div>
           </div>
           <div>
             <img style={{ height: "400px",width: "400px"}} src={spot.SpotImages[0].url} />
+          </div>
+          <div>
+            <GetAllReviews spotId={spotId}/>
           </div>
         </div>
       )}
