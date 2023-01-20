@@ -23,7 +23,6 @@ export default function GetAllSpots(){
           <div key={spot.id}>
             <div>
               <img style={{ height: "400px",width: "400px"}} src={spot.previewImage} onClick={() => handleClick(spot.id)}></img>
-              {/* <img  id="spots-card" src={spot.previewImage} ></img> */}
             </div>
             <div>
               <div>
@@ -31,7 +30,7 @@ export default function GetAllSpots(){
                 <p>{spot.state}</p>
                 <p>{spot.price}</p>
               </div>
-              <p>avgRating:<span>(</span>{spot.avgRating}<span>)</span></p>
+              <p>avgRating:<span>( </span>{spot.avgRating?spot.avgRating:"new"}<span>)</span></p>
             </div>
           </div>
         ))
