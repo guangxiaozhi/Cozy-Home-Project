@@ -3,6 +3,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {useHistory, Link, useParams, Redirect} from 'react-router-dom';
 import {fetchOneSpot, deleteOneSpot} from '../../../store/spotsReducer';
 import GetAllReviews from '../../Reviews/GetAllReviews';
+import { fetchAllReviewsBySpotId } from "../../../store/reviewsReducer"
 import './singleSpotPage.css'
 
 
@@ -13,6 +14,13 @@ export default function GetSpotDetails(){
   const {spotId} = useParams();
   const spot = useSelector(state => state.spots.singleSpot)
   const sessionUser = useSelector(state => state.session.user)
+
+
+  const allReviews = useSelector(state => state.reviews)
+  useEffect(() => {
+    dispatch(fetchAllReviewsBySpotId(spotId))
+  },[dispatch])
+
   useEffect(() => {
     dispatch(fetchOneSpot(+spotId));
   }, [dispatch]);
@@ -49,7 +57,7 @@ export default function GetSpotDetails(){
             <img style={{ height: "400px",width: "400px"}} src={spot.SpotImages[0].url} />
           </div>
           <div>
-            <GetAllReviews spotId={spotId}/>
+            <GetAllReviews spotId={spotId} allReviews={allReviews}/>
           </div>
         </div>
       )}

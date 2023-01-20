@@ -40,14 +40,12 @@ export const deleteReviewById = (reviewId) => async (dispatch) => {
 // create new review
 const CREATE_REVIEW = 'reviews/CREATE_REVIEW'
 const createReview = (review) => {
-  console.log("create review action", review)
   return {
     type:CREATE_REVIEW,
     review
   }
 }
 export const createOneReview = (newReview,spotId) => async (dispatch) => {
-  console.log("begin to fetch date to create new review")
   const res = await csrfFetch(`/api/spots/${spotId}/reviews`, {
     method:"POST",
     headers: {"Content-Type":"application/json"},
@@ -64,31 +62,28 @@ export const createOneReview = (newReview,spotId) => async (dispatch) => {
 const initialState = {}
 
 const reviewReducer = (state = initialState, action) => {
-
+  let newState
   switch (action.type) {
     case LOAD_ALL_REVIEWS_BY_SPOTID:
-      {
-        const newState = {};
+        newState = {};
         const allReviews = action.reviews
         allReviews.forEach(review =>{
           newState[review["id"]] = review
         })
         return newState
-      }
+
     case DELETE_REVIEW:
-      {
-        const newState = {...state}
+        newState = {...state}
         delete newState[action.reviewId]
         return newState
-      }
+
     case CREATE_REVIEW:
-      {
-        const newState = {...state}
+        newState = {...state}
         newState[action.review.id] = action.review;
         return newState;
-      }
+
     default:
-      return initialState;
+      return state;
   }
 }
 export default reviewReducer;
