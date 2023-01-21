@@ -51,7 +51,6 @@ export const createOneReview = (newReview,spotId) => async (dispatch) => {
     headers: {"Content-Type":"application/json"},
     body:JSON.stringify(newReview)
   })
-  console.log(res)
   if(res.ok){
     const review = await res.json();
     dispatch(createReview(review));
@@ -81,9 +80,7 @@ const reviewReducer = (state = initialState, action) => {
 
     case CREATE_REVIEW:
         newState = {...state}
-        console.log("reviewReducer prevState::::", state)
         newState[action.review.id] = action.review;
-        console.log("reviewReducer nextState::::", newState)
         return newState;
 
     default:

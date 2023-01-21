@@ -1,9 +1,8 @@
 import {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {useHistory, Link, useParams, Redirect} from 'react-router-dom';
+import {useHistory,  useParams} from 'react-router-dom';
 import {fetchOneSpot, deleteOneSpot} from '../../../store/spotsReducer';
 import GetAllReviews from '../../Reviews/GetAllReviews';
-import { fetchAllReviewsBySpotId } from "../../../store/reviewsReducer"
 import './singleSpotPage.css'
 
 
@@ -14,9 +13,6 @@ export default function GetSpotDetails(){
   const {spotId} = useParams();
   const spot = useSelector(state => state.spots.singleSpot)
   const sessionUser = useSelector(state => state.session.user)
-
-
-
 
   useEffect(() => {
     dispatch(fetchOneSpot(+spotId));
