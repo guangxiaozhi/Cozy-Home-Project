@@ -65,6 +65,7 @@ const reviewReducer = (state = initialState, action) => {
   let newState
   switch (action.type) {
     case LOAD_ALL_REVIEWS_BY_SPOTID:
+
         newState = {};
         const allReviews = action.reviews
         allReviews.forEach(review =>{
@@ -73,13 +74,16 @@ const reviewReducer = (state = initialState, action) => {
         return newState
 
     case DELETE_REVIEW:
+
         newState = {...state}
         delete newState[action.reviewId]
         return newState
 
     case CREATE_REVIEW:
         newState = {...state}
+        console.log("reviewReducer prevState::::", state)
         newState[action.review.id] = action.review;
+        console.log("reviewReducer nextState::::", newState)
         return newState;
 
     default:

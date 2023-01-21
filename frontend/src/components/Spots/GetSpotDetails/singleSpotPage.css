@@ -3,3 +3,13 @@
   justify-content: space-between;
   padding: 10px;
 }
+
+.single-spot-information-container{
+  display: flex;
+  justify-content: space-between;
+}
+
+.button{
+  margin-left: 5px;
+  border-radius: 15px;
+}

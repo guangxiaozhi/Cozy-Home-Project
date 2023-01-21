@@ -17,14 +17,17 @@ function Navigation({ isLoaded }){
       <li>
         <NavLink exact to="/">Home</NavLink>
       </li>
+      <div className='right-part'>
+        <li className='create-new-spot'>
+        <NavLink to="/spots/newSpot">Create New Spot</NavLink>
+      </li>
       {isLoaded && (
-        <li>
+        <li className='dropdown-menu'>
           <ProfileButton user={sessionUser} />
         </li>
       )}
-      <li>
-        <NavLink to="/spots/newSpot">Create New Spot</NavLink>
-      </li>
+      </div>
+
     </ul>
   );
 }

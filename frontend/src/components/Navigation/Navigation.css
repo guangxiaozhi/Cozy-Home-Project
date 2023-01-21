@@ -11,3 +11,18 @@
   flex-direction: row;
   justify-content: space-around;
 }
+
+.right-part{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.create-new-spot{
+  margin:10px
+}
+.dropdown-menu{
+  margin:10px;
+  border: 1px solid grey;
+  border-radius: 21px
+}
