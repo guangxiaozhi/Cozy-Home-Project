@@ -16,7 +16,7 @@ const reviewseed = [
   {
     spotId:2,
     userId:3,
-    review:"Such a beautiful location and everything we needed was accounted for. The host was amazing to communicate with. Will definitely look her up when we’re back!!",
+    review:"Such a beautiful location and everything we needed was accounted for!!",
     stars:4
   },
   {
@@ -28,7 +28,7 @@ const reviewseed = [
   {
     spotId:4,
     userId:1,
-    review:"This home is amazing and exactly how shown and described, although you can't really capture the beauty of the view and such through photos. Every window and every angle is/has an amazing view of the hills and the ocean. The home is very spacious and great for having guests over for dinner. Katherine (host) and her family are very friendly, super helpful, and great at ongoing communication. We will definitely stay here again in the future. It's a great place to bring your well-behaved furry friend as well.",
+    review:"This home is amazing.",
     stars:5
   }
 ]

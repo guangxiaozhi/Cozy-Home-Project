@@ -28,7 +28,7 @@ export default function GetAllReviews({spotId}){
     await dispatch(deleteReviewById(reviewId))
   }
 
-
+  const options = { year: 'numeric', month: 'long' };
 
   return (
     <div>
@@ -38,7 +38,7 @@ export default function GetAllReviews({spotId}){
 
       <div key={review.id}>
         <div>user:{review.User.firstName}</div>
-        <div>Time: {review.updatedAt}</div>
+        <div>Time: {new Date(review.updatedAt).toLocaleDateString("en-US", options)}</div>
         <div>Review: {review.review}</div>
         {sessionUser && review.userId === sessionUser.id?<button onClick={handleDelete(review.id)}>Delete Review</button>: ""}
       </div>
