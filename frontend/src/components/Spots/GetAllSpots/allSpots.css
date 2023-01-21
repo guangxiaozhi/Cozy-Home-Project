@@ -4,7 +4,7 @@
 }
 
 .spot-image{
-  margin: 20px;
+  margin: 5px;
   padding: 5px;
   border-radius: 21px;
 }
@@ -12,11 +12,21 @@
 .spot-information{
   display: flex;
   justify-content: space-between;
+  width: 300px;
+  padding-left: 10px;
+  box-sizing: border-box
 }
 
 .city-state{
   display: flex;
 }
+
 .information{
   padding: 5px;
+}
+
+.spot{
+  display: flex;
+  flex-direction: column;
+  align-items: baseline;
 }
