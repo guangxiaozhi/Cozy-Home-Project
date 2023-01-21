@@ -372,12 +372,12 @@ router.post('/:id/reviews', requireAuth, validateReview, async (req, res, next) 
       "message": "Spot couldn't be found"
     })
   }
-  if(spot.ownerId === user.id){
-    res.status(403);
-    return res.json({
-      "message": "User can't add review on his own spot"
-    })
-  }
+  // if(spot.ownerId === user.id){
+  //   res.status(403);
+  //   return res.json({
+  //     "message": "User can't add review on his own spot"
+  //   })
+  // }
   const {review, stars} = req.body;
   const existReview = await Review.findOne({
     where:{

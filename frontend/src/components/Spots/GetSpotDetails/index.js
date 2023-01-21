@@ -35,7 +35,8 @@ export default function GetSpotDetails(){
             <h2>{spot.name}</h2>
             <div className='single-spot-information-container'>
               <div>
-                <span>★ {spot.avgStarRating ? spot.avgStarRating:"new"} </span>
+                <span>★ {spot.avgStarRating ? Number(spot.avgStarRating).toFixed(2):"new"} </span>
+                <span>{spot.numReviews} reviews</span>
                 <span> {spot.city}, {spot.state}, {spot.country}</span>
               </div>
               {sessionUser && sessionUser.id === spot.ownerId && (
