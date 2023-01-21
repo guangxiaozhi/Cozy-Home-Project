@@ -1,0 +1,19 @@
+.reviews-container{
+  width:500px;
+  display: flex;
+  flex-direction: column;
+}
+
+.single-review{
+  margin:10px;
+}
+
+.delete-review{
+  margin-top:10px
+}
+
+.review-user-data{
+  font-size: 14px;
+  margin-left: 10px;
+  margin-bottom: 5px
+}

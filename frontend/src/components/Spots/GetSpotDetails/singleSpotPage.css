@@ -1,15 +1,31 @@
 .Edit_Delete_container{
   display: flex;
   justify-content: space-between;
-  padding: 10px;
 }
 
 .single-spot-information-container{
   display: flex;
   justify-content: space-between;
+  width:500px;
+  padding-bottom: 10px;
 }
 
 .button{
   margin-left: 5px;
   border-radius: 15px;
+}
+.address{
+  padding-right: 10px;
+}
+
+.hard-code{
+  width:500px;
+}
+
+.header{
+  width:500px;
+}
+
+reviews{
+  width:500px;
 }

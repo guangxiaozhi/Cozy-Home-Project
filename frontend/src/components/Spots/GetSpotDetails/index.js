@@ -27,17 +27,17 @@ export default function GetSpotDetails(){
     history.push('/')
   }
   return (
-    <div>
+    <div className='single-spot-container'>
       {spot && spot.SpotImages && (
         <div>
 
           <div>
-            <h2>{spot.name}</h2>
+            <h2 className='header'>{spot.name}</h2>
             <div className='single-spot-information-container'>
-              <div>
-                <span>★ {spot.avgStarRating ? Number(spot.avgStarRating).toFixed(2):"new"} </span>
-                <span>{spot.numReviews} reviews</span>
-                <span> {spot.city}, {spot.state}, {spot.country}</span>
+              <div >
+                <span className='address'>★ {spot.avgStarRating ? Number(spot.avgStarRating).toFixed(2):"new"} </span>
+                <span className='address'>{spot.numReviews} reviews</span>
+                <span className='address'> {spot.city}, {spot.state}, {spot.country}</span>
               </div>
               {sessionUser && sessionUser.id === spot.ownerId && (
                 <div className='Edit_Delete_container'>
@@ -48,7 +48,7 @@ export default function GetSpotDetails(){
             </div>
           </div>
           <div>
-            <img style={{ height: "400px",width: "400px"}} src={spot.SpotImages[0].url} />
+            <img  style={{ height: "450px",width: "500px"}} src={spot.SpotImages[0].url} />
           </div>
           <div className='hard-code'>
                 <h2>Entire home hosted by Fieldtrip</h2>
@@ -58,7 +58,7 @@ export default function GetSpotDetails(){
                 <p>Superhosts are experienced, highly rated hosts who are committed to providing great stays for guests.</p>
           </div>
           <hr></hr>
-          <div>
+          <div className='reviews'>
             {/* <GetAllReviews spotId={spotId} allReviews={allReviews}/> */}
             <GetAllReviews spotId={spotId}/>
           </div>

@@ -16,19 +16,19 @@ const spotseed = [
     lng:98.23,
     name:'Hilton',
     description:'very good',
-    price:245.6
+    price:245
   },
   {
     ownerId:2,
     address:'987 756TH SE PL',
-    city:'Santiago',
+    city:'SanDiego',
     state:'Caniforlia',
     country:'USA',
     lat:12.4,
     lng:37.56,
     name:'Marriott',
     description:'comfortable',
-    price:24.56
+    price:198
   },
   {
     ownerId:3,
@@ -40,7 +40,7 @@ const spotseed = [
     lng:65.3,
     name:'Beverly Hills',
     description:'good view',
-    price:24.56
+    price:175
   },
   {
     ownerId:4,
@@ -52,7 +52,7 @@ const spotseed = [
     lng:87.0,
     name:'Superior',
     description:'convenient to go shopping',
-    price:24.56
+    price:234
   }
 ]
 /** @type {import('sequelize-cli').Migration} */
