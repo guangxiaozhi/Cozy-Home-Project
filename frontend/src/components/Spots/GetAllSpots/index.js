@@ -17,20 +17,22 @@ export default function GetAllSpots(){
     history.push(`/spots/${spotId}`)
   }
   return (
-    <div>
+    <div className="spots-container">
       {allSpots && (
         allSpots.map(spot => (
-          <div key={spot.id}>
-            <div>
-              <img style={{ height: "400px",width: "400px"}} src={spot.previewImage} onClick={() => handleClick(spot.id)}></img>
+          <div key={spot.id} className='spot'>
+            <div className='spot-image'>
+              <img style={{ height: "300px",width: "300px"}} src={spot.previewImage} onClick={() => handleClick(spot.id)}></img>
             </div>
-            <div>
-              <div>
-                <p>{spot.city}</p>
-                <p>{spot.state}</p>
-                <p>{spot.price}</p>
+            <div className='spot-information'>
+              <div >
+                <div className='city-state'>
+                  <p className='information'>{spot.city}</p>
+                  <p className='information'>{spot.state}</p>
+                </div>
+                <p>$ {spot.price} per night</p>
               </div>
-              <p>avgRating:<span>( </span>{spot.avgRating?spot.avgRating:"new"}<span>)</span></p>
+              <p>★{spot.avgRating?spot.avgRating:"new"}</p>
             </div>
           </div>
         ))

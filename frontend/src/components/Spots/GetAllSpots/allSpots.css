@@ -1,4 +1,22 @@
-#spots-card{
-  width:"400px";
-  height:"400px"
+.spots-container{
+  display: flex;
+  flex-wrap:wrap;
+}
+
+.spot-image{
+  margin: 20px;
+  padding: 5px;
+  border-radius: 21px;
+}
+
+.spot-information{
+  display: flex;
+  justify-content: space-between;
+}
+
+.city-state{
+  display: flex;
+}
+.information{
+  padding: 5px;
 }
