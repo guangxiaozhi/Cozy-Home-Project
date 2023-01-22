@@ -24,11 +24,12 @@
 
 .city-state{
   display: flex;
-  width:100px;
+  width:260px;
 }
 
 .information{
   padding-left: 5px;
+  width:auto
 }
 
 .price{

@@ -44,7 +44,7 @@ function SignupFormModal() {
         {errors.map((error, idx) => <li key={idx}>{error}</li>)}
       </ul>
         <input
-          className="information"
+          className="sign-up-information"
           type="text"
           placeholder="Email"
           value={email}
@@ -52,7 +52,7 @@ function SignupFormModal() {
           required
         />
         <input
-          className="information"
+          className="sign-up-information"
           type="text"
           placeholder="Username"
           value={username}
@@ -60,7 +60,7 @@ function SignupFormModal() {
           required
         />
         <input
-          className="information"
+          className="sign-up-information"
           type="text"
           placeholder="First Name"
           value={firstName}
@@ -68,7 +68,7 @@ function SignupFormModal() {
           required
         />
         <input
-          className="information"
+          className="sign-up-information"
           type="text"
           placeholder="Last Name"
           value={lastName}
@@ -76,7 +76,7 @@ function SignupFormModal() {
           required
         />
         <input
-          className="information"
+          className="sign-up-information"
           type="password"
           placeholder="Password"
           value={password}
@@ -84,7 +84,7 @@ function SignupFormModal() {
           required
         />
         <input
-          className="information"
+          className="sign-up-information"
           type="password"
           placeholder="Confirm Password"
           value={confirmPassword}

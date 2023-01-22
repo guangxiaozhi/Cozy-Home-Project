@@ -10,15 +10,21 @@ function Navigation({ isLoaded }){
 
   return (
     <ul className='navigation'>
-      <li className="menu-list">
-        <NavLink exact to="/">Home</NavLink>
-      </li>
+      <div className='icon-menu'>
+        <li className="icon-list">
+          <NavLink exact to="/"><img src='https://a0.muscache.com/pictures/35919456-df89-4024-ad50-5fcb7a472df9.jpg'/></NavLink>
+        </li>
+        <li className="menu-list">
+          <NavLink exact to="/">Home</NavLink>
+        </li>
+      </div>
+
       <div className='right-part'>
-        <li className='create-new-spot menu-list'>
+        <li className='create-new-spot'>
         <NavLink to="/spots/newSpot">Create New Spot</NavLink>
       </li>
       {isLoaded && (
-        <li className='dropdown-menu menu-list'>
+        <li className='dropdown-menu'>
           <ProfileButton user={sessionUser} />
         </li>
       )}

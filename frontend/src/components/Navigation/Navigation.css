@@ -17,7 +17,21 @@
 }
 
 .menu-list{
+  width:100px;
   list-style-type: none;
+  margin-left: 3px;
+}
+
+.icon-list{
+  list-style-type: none;
+}
+.icon-list img{
+  width:25px;
+}
+
+.icon-menu{
+  display: flex;
+  align-items: center;
 }
 
 .right-part{
@@ -27,18 +41,23 @@
 }
 
 .create-new-spot{
-  margin:10px
+  margin:10px;
+  list-style-type: none;
 }
 .dropdown-menu{
   margin:10px;
-  /* border: 1px solid grey;
-  border-radius: 21px */
+  list-style-type: none;
 }
 
 .profile-dropdown-li button{
   border-radius: 10px;
   background-color:antiquewhite;
   margin:2px;
+}
+
+
+button:hover {
+  background-color: lightgray;
 }
 
 .profile-dropdown-information{
