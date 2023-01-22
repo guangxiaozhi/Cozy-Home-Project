@@ -1,8 +1,9 @@
 .create-review-container{
+  width:550px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  margin: auto 200px;
+  align-items: center;
+  margin: auto;
 
 }
 .create-review-container label{
@@ -12,6 +13,7 @@
 
 .create-review-container span{
   width: 80px;
+  margin-left: 10px;
 }
 
 .create-review-container select{
@@ -19,6 +21,19 @@
 }
 
 .create-review-container button{
-  width: 30%;
-  margin-top: 20px;
+  /* width: 30%;
+  margin-top: 20px; */
+  width:260px;
+  height:25px;
+  margin:10px;
+  border-radius: 10px;
+  background-color:antiquewhite
+}
+
+.create-new-review-form{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border: 1px solid grey;
+  width:280px;
 }

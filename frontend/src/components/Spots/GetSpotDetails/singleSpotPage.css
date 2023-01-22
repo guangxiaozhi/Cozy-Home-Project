@@ -18,7 +18,8 @@
 
 .button{
   margin-left: 5px;
-  border-radius: 12px;
+  border-radius: 10px;
+  background-color:antiquewhite;
   width:50px;
 }
 .address{
