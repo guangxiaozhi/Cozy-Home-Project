@@ -22,7 +22,7 @@ export default function GetAllSpots(){
         allSpots.map(spot => (
           <div key={spot.id} className='spot'>
             <div >
-              <img className='spot-image' style={{ height: "300px",width: "300px"}} src={spot.previewImage} onClick={() => handleClick(spot.id)}></img>
+              <img className='spot-image'  src={spot.previewImage} onClick={() => handleClick(spot.id)}></img>
             </div>
             <div className='spot-information'>
               <div >
@@ -30,9 +30,9 @@ export default function GetAllSpots(){
                   <p className='information'>{spot.city}</p>
                   <p className='information'>{spot.state}</p>
                 </div>
-                <p>${spot.price }  night</p>
+                <p className='price'>${spot.price }  night</p>
               </div>
-              <div>★{spot.avgRating?Number(spot.avgRating).toFixed(2):"new"}</div>
+              <div className='avegRating'>★{spot.avgRating?Number(spot.avgRating).toFixed(2):"new"}</div>
             </div>
           </div>
         ))

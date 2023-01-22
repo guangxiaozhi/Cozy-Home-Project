@@ -9,7 +9,11 @@
 .navigation {
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-between;
+  width: auto;
+  margin-left: 10%;
+  margin-right:10%;
+  align-items: center;
 }
 
 .right-part{
@@ -23,6 +27,6 @@
 }
 .dropdown-menu{
   margin:10px;
-  border: 1px solid grey;
-  border-radius: 21px
+  /* border: 1px solid grey;
+  border-radius: 21px */
 }

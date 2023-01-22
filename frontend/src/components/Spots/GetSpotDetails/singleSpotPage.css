@@ -1,4 +1,4 @@
-.Edit_Delete_container{
+.Edit-delete-container{
   display: flex;
   justify-content: space-between;
 }
@@ -12,7 +12,8 @@
 
 .button{
   margin-left: 5px;
-  border-radius: 15px;
+  border-radius: 12px;
+  width:50px;
 }
 .address{
   padding-right: 10px;
@@ -26,6 +27,10 @@
   width:500px;
 }
 
-reviews{
+.reviews{
   width:500px;
+}
+
+.detail-image{
+  border-radius: 21px;
 }
