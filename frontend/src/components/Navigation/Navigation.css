@@ -10,7 +10,6 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  /* margin-right: 50px; */
   width: auto;
   margin-left: 10%;
   margin-right:10%;
@@ -28,6 +27,6 @@
 }
 .dropdown-menu{
   margin:10px;
-  border: 1px solid grey;
-  border-radius: 21px
+  /* border: 1px solid grey;
+  border-radius: 21px */
 }
