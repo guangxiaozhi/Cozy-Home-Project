@@ -51,7 +51,7 @@ export default function CreateNewSpot(){
   return (
     <div className="create-spot-container">
       <h1>Create new spot</h1>
-      <form onSubmit={handleSubmit} className="CreateNewSpotForm">
+      <form onSubmit={handleSubmit} className="create-new-spot-form">
         <ul>
           {errors.map((error, idx) => <li key={idx}>{error}</li>)}
         </ul>

@@ -11,7 +11,9 @@
   flex-direction: row;
   justify-content: space-between;
   /* margin-right: 50px; */
-  width: 920px;
+  width: auto;
+  margin-left: 10%;
+  margin-right:10%;
   align-items: center;
 }
 

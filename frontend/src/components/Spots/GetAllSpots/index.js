@@ -22,7 +22,7 @@ export default function GetAllSpots(){
         allSpots.map(spot => (
           <div key={spot.id} className='spot'>
             <div >
-              <img className='spot-image' style={{ height: "300px",width: "300px"}} src={spot.previewImage} onClick={() => handleClick(spot.id)}></img>
+              <img className='spot-image'  src={spot.previewImage} onClick={() => handleClick(spot.id)}></img>
             </div>
             <div className='spot-information'>
               <div >

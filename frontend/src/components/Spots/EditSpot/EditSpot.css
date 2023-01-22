@@ -1,11 +1,11 @@
-.create-spot-container{
+.edit-spot-container{
   width: 600px;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.create-new-spot-form{
+.edit-new-spot-form{
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -13,13 +13,18 @@
   width:400px;
 }
 
-.create-spot-information{
+.edit-spot-information{
   margin:5px;
   height:22px;
 }
 
-.create-spot-button{
-  width:390px;
+.edit-spot-button{
+  width:385px;
   height:25px;
-  margin:5px;
+  margin-left:10px;
+  margin-bottom: 10px;
+}
+
+.edit-spot-input{
+  margin-left:5px;
 }
