@@ -40,7 +40,7 @@ export default function GetAllReviews({spotId}){
       <div className="single-review" key={review.id}>
         <div className="review-user-data">
           <div >
-            <img src="https://a0.muscache.com/im/pictures/user/20110a44-8731-4252-ad58-396ff283209e.jpg?im_w=240" />
+            <img src="https://a0.muscache.com/defaults/user_pic-225x225.png" />
           </div>
           <div>
             <div>user: {review.User.firstName}</div>
