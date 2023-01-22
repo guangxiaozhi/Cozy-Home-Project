@@ -23,17 +23,20 @@ function LoginFormModal() {
   const handleSubmit = (e) => {
     e.preventDefault();
     setErrors([]);
-    return dispatch(sessionActions.login({ credential, password })).then(closeModal())
+    return dispatch(sessionActions.login({ credential, password })).then(closeModal)
+
       .catch(async (res) => {
         const data = await res.json();
-        if (data && data.errors) setErrors(data.errors);
+        if (data && data.errors) {
+          setErrors(data.errors)
+        };
       });
   }
 
   const demoUserClick = (e) => {
     e.preventDefault();
     setErrors([]);
-    return dispatch(sessionActions.login({ credential:"Demo-lition", password:"password" })).then(closeModal())
+    return dispatch(sessionActions.login({ credential:"Demo-lition", password:"password" })).then(closeModal)
       .catch(async (res) => {
         const data = await res.json();
         if (data && data.errors) setErrors(data.errors);
@@ -43,11 +46,11 @@ function LoginFormModal() {
     <>
       <h2 className='login-header'>Log In</h2>
       <form onSubmit={handleSubmit} className="login-form-container">
-        <ul>
+        <ul className='login-errors'>
           {errors.map((error, idx) => <li key={idx}>{error}</li>)}
         </ul>
           <input
-            className='login-form'
+            className='login-information'
             type="text"
             placeholder="Username/Email"
             value={credential}
@@ -55,15 +58,15 @@ function LoginFormModal() {
             required
           />
           <input
-            className='login-form'
+            className='login-information'
             type="password"
             placeholder="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-        <button className='button' type="submit">Log In</button>
-        <button className='button' onClick={demoUserClick}>demo-user</button>
+        <button className='login-button' type="submit">Log In</button>
+        <button className='login-button' onClick={demoUserClick}>demo-user</button>
       </form>
     </>
 

@@ -10,7 +10,9 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin-right: 50px;
+  /* margin-right: 50px; */
+  width: 920px;
+  align-items: center;
 }
 
 .right-part{

@@ -1,20 +1,27 @@
 .login-form-container {
   display: flex;
   flex-direction:column;
+  align-items: center;
+  width:300px;
 }
 
-.login-form{
+.login-information{
   height: 30px;
-  width: 300px;
+  width: 280px;
   margin-bottom: 10px;
 }
 
-.button{
+.login-button{
   height: 30px;
   border-radius: 8px;
   margin-bottom: 10px;
+  width:290px;
+
 }
 
 .login-header{
-  border-bottom:1px solid grey
+  text-align:center
+}
+.login-errors{
+  color: red;
 }

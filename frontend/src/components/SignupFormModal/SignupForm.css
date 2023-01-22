@@ -1,17 +1,27 @@
 .SignupForm {
   display: flex;
   flex-direction:column;
-  align-items: flex-start;
+  align-items: center;
+  width:350px;
 }
 
 .information{
-  margin:5px;
-  width:150px;
-  height:15px;
+  height: 30px;
+  width: 320px;
+  margin-bottom: 10px;
 }
 
 .sign-up-button{
-  margin:5px;
-  width:163px;
-  height:28px;
+  height: 30px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  width:335px;
+}
+
+.sign-up-header{
+  text-align:center
+}
+
+.sign-up-errors{
+  color: red;
 }

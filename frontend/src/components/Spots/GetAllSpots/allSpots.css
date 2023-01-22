@@ -1,7 +1,7 @@
 .spots-container{
   display: flex;
   flex-wrap:wrap;
-  width:1000px;
+  width:960px;
 }
 
 .spot-image{
