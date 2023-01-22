@@ -10,15 +10,15 @@ function Navigation({ isLoaded }){
 
   return (
     <ul className='navigation'>
-      <li>
+      <li className="menu-list">
         <NavLink exact to="/">Home</NavLink>
       </li>
       <div className='right-part'>
-        <li className='create-new-spot'>
+        <li className='create-new-spot menu-list'>
         <NavLink to="/spots/newSpot">Create New Spot</NavLink>
       </li>
       {isLoaded && (
-        <li className='dropdown-menu'>
+        <li className='dropdown-menu menu-list'>
           <ProfileButton user={sessionUser} />
         </li>
       )}

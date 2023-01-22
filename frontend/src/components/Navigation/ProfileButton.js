@@ -4,6 +4,7 @@ import * as sessionActions from '../../store/session';
 import OpenModalButton from '../OpenModalButton';
 import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignupFormModal';
+import './Navigation.css'
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
@@ -43,29 +44,29 @@ function ProfileButton({ user }) {
       </button>
       <ul className={ulClassName} ref={ulRef}>
         {user ? (
-          <>
+          <div className="profile-dropdown-information">
             <li>{user.username}</li>
             <li>{user.firstName} {user.lastName}</li>
             <li>{user.email}</li>
-            <li>
+            <li className="profile-dropdown-li">
               <button onClick={logout}>Log Out</button>
             </li>
-          </>
+          </div>
         ) : (
-          <>
-            <li>
+          <div className="profile-dropdown-information">
+            <li className="profile-dropdown-li">
               <OpenModalButton
                 buttonText="Log In"
                 modalComponent={<LoginFormModal />}
               />
             </li>
-            <li>
+            <li className="profile-dropdown-li">
               <OpenModalButton
                 buttonText="Sign Up"
                 modalComponent={<SignupFormModal />}
               />
             </li>
-          </>
+          </div>
         )}
       </ul>
     </>
