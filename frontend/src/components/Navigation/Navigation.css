@@ -34,3 +34,13 @@
   /* border: 1px solid grey;
   border-radius: 21px */
 }
+
+.profile-dropdown-li button{
+  border-radius: 10px;
+  background-color:antiquewhite;
+  margin:2px;
+}
+
+.profile-dropdown-information{
+  list-style-type: none;
+}
