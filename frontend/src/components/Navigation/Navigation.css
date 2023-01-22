@@ -16,6 +16,10 @@
   align-items: center;
 }
 
+.menu-list{
+  list-style-type: none;
+}
+
 .right-part{
   display: flex;
   flex-direction: row;

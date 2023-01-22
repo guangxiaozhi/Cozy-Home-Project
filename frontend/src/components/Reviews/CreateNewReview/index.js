@@ -40,7 +40,7 @@ export default function CreateNewReview(){
             {errors.map((error, idx) => <li key={idx}>{error}</li>)}
           </ul>
           <label>
-            review:
+            <span>review:</span>
             <input
               type="text"
               value={review}
@@ -49,7 +49,7 @@ export default function CreateNewReview(){
             />
           </label>
           <label>
-            stars:
+          <span>stars:</span>
             <select onChange={e => setStars(e.target.value)}>
             <option>Choose 1-5</option>
             <option>1</option>

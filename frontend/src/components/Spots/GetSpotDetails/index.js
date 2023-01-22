@@ -29,7 +29,7 @@ export default function GetSpotDetails(){
   return (
     <div className='single-spot-container'>
       {spot && spot.SpotImages && (
-        <div>
+        <div className='single-spot-inner-container'>
 
           <div>
             <h2 className='header'>{spot.name}</h2>

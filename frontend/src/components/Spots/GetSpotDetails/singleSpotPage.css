@@ -10,6 +10,12 @@
   padding-bottom: 10px;
 }
 
+.single-spot-inner-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .button{
   margin-left: 5px;
   border-radius: 12px;

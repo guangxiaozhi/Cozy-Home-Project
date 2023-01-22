@@ -1,25 +1,61 @@
-import { useState } from "react";
+import { useState, useEffect} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {useHistory, useParams} from 'react-router-dom';
-import { updateOneSpot } from "../../../store/spotsReducer";
+import { updateOneSpot, fetchOneSpot } from "../../../store/spotsReducer";
+
 import './EditSpot.css'
 
 export default function EditSpot(){
   const {spotId} = useParams();
-  const spot = useSelector(state => state.spots.allSpots[spotId])
+  const spot = useSelector(state => state.spots.singleSpot)
+  // console.log("spots", spots)
+  // const spot=spots[singleSpot]
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const [address, setAddress] = useState(spot.address);
-  const [city, setCity] = useState(spot.city);
-  const [state,setState] = useState(spot.state);
-  const [country, setCountry] = useState(spot.country);
-  const [lat, setLat] = useState(1232);
-  const [lng, setLng] = useState(54);
-  const [name, setName] = useState(spot.name);
-  const [description, setDeacription] = useState(spot.description);
-  const [price, setPrice] = useState(spot.price);
+  // const [address, setAddress] = useState(spot?.address);
+  // const [city, setCity] = useState(spot?.city);
+  // const [state,setState] = useState(spot?.state);
+  // const [country, setCountry] = useState(spot?.country);
+  // const [lat, setLat] = useState(1232);
+  // const [lng, setLng] = useState(54);
+  // const [name, setName] = useState(spot?.name);
+  // const [description, setDeacription] = useState(spot?.description);
+  // const [price, setPrice] = useState(spot?.price);
+  // const [errors, setErrors] = useState([]);
+
+  const [name, setName] = useState("");
+  const [address, setAddress] = useState("");
+  const [city, setCity] = useState("");
+  const [state, setState] = useState("");
+  const [country, setCountry] = useState("");
+  const [lat, setLat] = useState(0);
+  const [lng, setLng] = useState(0);
+  const [price, setPrice] = useState(0);
+  const [description, setDescription] = useState("");
   const [errors, setErrors] = useState([]);
+  // const [hasSubmitted, setHasSubmitted] = useState(false);
+
+  useEffect( () => {
+    if (spot) fillFields()
+}, [spot]);
+
+useEffect( () => {
+  dispatch(fetchOneSpot(spotId));
+
+}, [dispatch. spotId]);
+
+
+
+const fillFields = () => {
+    setName(spot.name)
+    setAddress(spot.address)
+    setCity(spot.city)
+    setState(spot.state)
+    setPrice(spot.price)
+    setDescription(spot.description)
+}
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -112,7 +148,7 @@ export default function EditSpot(){
             style={{width:"298px" }}
             type="text"
             value={description}
-            onChange={(e) => setDeacription(e.target.value)}
+            onChange={(e) => setDescription(e.target.value)}
             required
           />
         </label>
@@ -129,6 +165,9 @@ export default function EditSpot(){
         </label>
         <button className="edit-spot-button" type="submit">Edit</button>
       </form>
+
+
+
     </div>
   )
 }
