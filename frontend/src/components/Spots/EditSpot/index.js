@@ -86,77 +86,63 @@ const fillFields = () => {
         <ul>
           {errors.map((error, idx) => <li key={idx}>{error}</li>)}
         </ul>
-        <label className="edit-spot-information">
-          Address:
+        <label>
+          <span>Address:</span>
           <input
-            className="edit-spot-input"
-            style={{width:"320px" }}
             type="text"
             value={address}
             onChange={(e) => setAddress(e.target.value)}
             required
           />
         </label>
-        <label className="edit-spot-information">
-          City:
+        <label>
+          <span>City:</span>
           <input
-            className="edit-spot-input"
-            style={{width:"344px" }}
             type="text"
             value={city}
             onChange={(e) => setCity(e.target.value)}
             required
           />
         </label>
-        <label className="edit-spot-information">
-          State:
+        <label>
+          <span>State:</span>
           <input
-            className="edit-spot-input"
-            style={{width:"340px" }}
             type="text"
             value={state}
             onChange={(e) => setState(e.target.value)}
             required
           />
         </label>
-        <label className="edit-spot-information">
-          Country:
+        <label>
+          <span>Country:</span>
           <input
-            className="edit-spot-input"
-            style={{width:"320px" }}
             type="text"
             value={country}
             onChange={(e) => setCountry(e.target.value)}
             required
           />
         </label>
-        <label className="edit-spot-information">
-          Name:
+        <label>
+          <span>Name:</span>
           <input
-            className="edit-spot-input"
-            style={{width:"335px" }}
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
             required
           />
         </label>
-        <label className="edit-spot-information">
-          Description:
+        <label>
+          <span>Description:</span>
           <input
-            className="edit-spot-input"
-            style={{width:"298px" }}
             type="text"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             required
           />
         </label>
-        <label className="edit-spot-information">
-          Price:
+        <label>
+          <span>Price:</span>
           <input
-            className="edit-spot-input"
-            style={{width:"340px" }}
             type="number"
             value={price}
             onChange={(e) => setPrice(e.target.value)}
