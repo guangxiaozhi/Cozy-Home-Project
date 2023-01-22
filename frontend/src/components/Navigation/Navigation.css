@@ -1,9 +1,12 @@
 .profile-dropdown {
   position: absolute;
 }
-
 .hidden {
   display: none;
+}
+
+.profile-dropdown-button {
+  cursor: pointer;
 }
 
 .navigation {
@@ -53,6 +56,7 @@
   border-radius: 10px;
   background-color:antiquewhite;
   margin:2px;
+  cursor: pointer;
 }
 
 
