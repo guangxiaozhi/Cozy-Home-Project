@@ -99,14 +99,11 @@ export const updateSpot = (spot) => {
   }
 }
 export const updateOneSpot = (spot,spotId) =>async (dispatch) => {
-  console.log("satart spot", spot);
-  console.log("start spotId", spotId)
   const res = await csrfFetch(`/api/spots/${spotId}`,{
     method:"PUT",
     header:{"Content-Type":"application/json"},
     body:JSON.stringify(spot)
   })
-  console.log("dispatch success?", res)
   if(res.ok){
     const newSpot = await res.json();
     dispatch(updateSpot(newSpot));

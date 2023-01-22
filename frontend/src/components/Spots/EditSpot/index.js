@@ -77,7 +77,6 @@ const fillFields = () => {
       const data = await res.json();
       if (data && data.errors) setErrors(data.errors);
     });
-    console.log("does it dispatch successful?")
     history.push(`/spots/${spotId}`)
   }
 
