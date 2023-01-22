@@ -2,7 +2,8 @@ import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { NavLink } from "react-router-dom";
-import { fetchAllReviewsBySpotId ,deleteReviewById} from "../../../store/reviewsReducer"
+import { fetchAllReviewsBySpotId ,deleteReviewById} from "../../../store/reviewsReducer";
+import {fetchOneSpot} from "../../../store/spotsReducer";
 import './getAllReviews.css'
 
 export default function GetAllReviews({spotId}){
@@ -27,6 +28,8 @@ export default function GetAllReviews({spotId}){
 
   const handleDelete = (reviewId) => async (e) => {
     await dispatch(deleteReviewById(reviewId))
+    .then(() => dispatch(fetchAllReviewsBySpotId(spotId)))
+    .then(() => dispatch(fetchOneSpot(spotId)))
   }
 
   const options = { year: 'numeric', month: 'long' };
