@@ -32,7 +32,7 @@ export default function GetAllSpots(){
                 </div>
                 <p className='price'>${spot.price }  night</p>
               </div>
-              <div>★{spot.avgRating?Number(spot.avgRating).toFixed(2):"new"}</div>
+              <div className='avegRating'>★{spot.avgRating?Number(spot.avgRating).toFixed(2):"new"}</div>
             </div>
           </div>
         ))

@@ -28,14 +28,18 @@
 }
 
 .information{
-  padding: 5px;
+  padding-left: 5px;
 }
 
 .price{
-  padding: 5px;
+  padding-left: 5px;
 }
 
 .spot{
   display: flex;
   flex-direction: column;
+}
+
+.avegRating{
+  margin-top:12px;
 }
