@@ -55,79 +55,71 @@ export default function CreateNewSpot(){
         <ul>
           {errors.map((error, idx) => <li key={idx}>{error}</li>)}
         </ul>
-        <label>
-          Address:
           <input
+            className="create-spot-information"
             type="text"
+            placeholder="Address"
             value={address}
             onChange={(e) => setAddress(e.target.value)}
             required
           />
-        </label>
-        <label>
-          City:
           <input
+            className="create-spot-information"
             type="text"
+            placeholder="City"
             value={city}
             onChange={(e) => setCity(e.target.value)}
             required
           />
-        </label>
-        <label>
-          State:
           <input
+            className="create-spot-information"
             type="text"
+            placeholder="State"
             value={state}
             onChange={(e) => setState(e.target.value)}
             required
           />
-        </label>
-        <label>
-          Country:
           <input
+            className="create-spot-information"
             type="text"
+            placeholder="Country"
             value={country}
             onChange={(e) => setCountry(e.target.value)}
             required
           />
-        </label>
-        <label>
-          Name:
           <input
+            className="create-spot-information"
             type="text"
+            placeholder="Name"
             value={name}
             onChange={(e) => setName(e.target.value)}
             required
           />
-        </label>
-        <label>
-          Description:
           <input
+            className="create-spot-information"
             type="text"
+            placeholder="Description"
             value={description}
             onChange={(e) => setDeacription(e.target.value)}
             required
           />
-        </label>
-        <label>
-          Price:
           <input
+            className="create-spot-information"
             type="number"
+            placeholder="Price per night"
             value={price}
             onChange={(e) => setPrice(e.target.value)}
             required
           />
-        </label>
-        <label>
-          Url:
           <input
+            className="create-spot-information"
             type="text"
+            placeholder="Image"
             value={url}
             onChange={(e) => setUrl(e.target.value)}
             required
           />
-        </label>
-        <button type="submit">create</button>
+        <button className="create-spot-button" type="submit">create</button>
       </form>
     </>
   )

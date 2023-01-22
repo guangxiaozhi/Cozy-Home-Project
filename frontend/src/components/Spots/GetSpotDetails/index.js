@@ -40,15 +40,15 @@ export default function GetSpotDetails(){
                 <span className='address'> {spot.city}, {spot.state}, {spot.country}</span>
               </div>
               {sessionUser && sessionUser.id === spot.ownerId && (
-                <div className='Edit_Delete_container'>
-                  <button className='button' onClick={handleEdit}>Edit Spot</button>
-                  <button className='button' onClick={handleDelete}>Delete Spot</button>
+                <div className='Edit-delete-container'>
+                  <button className='button' onClick={handleEdit}>Edit</button>
+                  <button className='button' onClick={handleDelete}>Delete</button>
                 </div>
               )}
             </div>
           </div>
           <div>
-            <img  style={{ height: "450px",width: "500px"}} src={spot.SpotImages[0].url} />
+            <img className='detail-image' style={{ height: "450px",width: "500px"}} src={spot.SpotImages[0].url} />
           </div>
           <div className='hard-code'>
                 <h2>Entire home hosted by Fieldtrip</h2>
