@@ -20,15 +20,15 @@ function SignupFormModal() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (password === confirmPassword) {
-      setErrors([]);
-      return dispatch(sessionActions.signup({ email, username, firstName, lastName, password })).then(closeModal())
-        .catch(async (res) => {
+    if (password !== confirmPassword) {
+     return setErrors(['Confirm Password field must be the same as the Password field']);
+    }
+    setErrors([]);
+    return dispatch(sessionActions.signup({ email, username, firstName, lastName, password })).then(closeModal)
+      .catch(async (res) => {
           const data = await res.json();
           if (data && data.errors) setErrors(data.errors);
-        });
-    }
-    return setErrors(['Confirm Password field must be the same as the Password field']);
+        })
   };
 
 
