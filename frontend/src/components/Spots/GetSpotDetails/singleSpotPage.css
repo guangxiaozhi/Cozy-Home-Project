@@ -21,6 +21,7 @@
   border-radius: 10px;
   background-color:antiquewhite;
   width:50px;
+  cursor: pointer;
 }
 .address{
   padding-right: 10px;

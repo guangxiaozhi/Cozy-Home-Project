@@ -21,7 +21,8 @@
   margin:10px;
   margin-bottom: 10px;
   border-radius: 10px;
-  background-color:antiquewhite
+  background-color:antiquewhite;
+  cursor: pointer;
 }
 
 .edit-new-spot-form label{
