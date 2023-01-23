@@ -39,8 +39,14 @@ export default function GetAllReviews({spotId}){
 
       <div className="single-review" key={review.id}>
         <div className="review-user-data">
-          <div>user: {review.User.firstName}</div>
-          <div>Time: {new Date(review.updatedAt).toLocaleDateString("en-US", options)}</div>
+          <div >
+            <img src="https://a0.muscache.com/im/pictures/user/20110a44-8731-4252-ad58-396ff283209e.jpg?im_w=240" />
+          </div>
+          <div>
+            <div>user: {review.User.firstName}</div>
+            <div>Time: {new Date(review.updatedAt).toLocaleDateString("en-US", options)}</div>
+          </div>
+
         </div>
         <div>Review: {review.review}</div>
         {sessionUser && review.userId === sessionUser.id?<button className="delete-review" onClick={handleDelete(review.id)}>Delete Review</button>: ""}

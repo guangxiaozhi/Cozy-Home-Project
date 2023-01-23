@@ -51,10 +51,11 @@ export default function GetSpotDetails(){
             <img className='detail-image' style={{ height: "450px",width: "500px"}} src={spot.SpotImages[0].url} />
           </div>
           <div className='hard-code'>
-                <h2>Entire home hosted by Fieldtrip</h2>
+                <h2>Entire home hosted by {spot.Owner.firstName}</h2>
                 <p>8 guests4 bedrooms4 beds5 baths</p>
+                <p>description: {spot.description}</p>
                 <hr></hr>
-                <h3>Fieldtrip is a Superhost</h3>
+                <h3>{spot.Owner.firstName} is a Superhost</h3>
                 <p>Superhosts are experienced, highly rated hosts who are committed to providing great stays for guests.</p>
           </div>
           <hr></hr>

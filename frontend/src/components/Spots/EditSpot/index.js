@@ -29,8 +29,8 @@ export default function EditSpot(){
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
   const [country, setCountry] = useState("");
-  const [lat, setLat] = useState(0);
-  const [lng, setLng] = useState(0);
+  const [lat, setLat] = useState(10);
+  const [lng, setLng] = useState(10);
   const [price, setPrice] = useState(0);
   const [description, setDescription] = useState("");
   const [errors, setErrors] = useState([]);
@@ -52,6 +52,7 @@ const fillFields = () => {
     setAddress(spot.address)
     setCity(spot.city)
     setState(spot.state)
+    setCountry(spot.country)
     setPrice(spot.price)
     setDescription(spot.description)
 }
@@ -76,7 +77,8 @@ const fillFields = () => {
       const data = await res.json();
       if (data && data.errors) setErrors(data.errors);
     });
-    history.push(`/spots/${newSpot["id"]}`)
+    console.log("does it dispatch successful?")
+    history.push(`/spots/${spotId}`)
   }
 
   return (
