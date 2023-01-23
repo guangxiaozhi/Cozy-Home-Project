@@ -36,7 +36,7 @@ export default function GetSpotDetails(){
             <div className='single-spot-information-container'>
               <div >
                 <span className='address'>★ {spot.avgStarRating ? Number(spot.avgStarRating).toFixed(2):"new"} </span>
-                <span className='address'>{spot.numReviews} reviews</span>
+                <span className='address'>• {spot.numReviews} reviews</span>
                 <span className='address'> {spot.city}, {spot.state}, {spot.country}</span>
               </div>
               {sessionUser && sessionUser.id === spot.ownerId && (
@@ -52,7 +52,7 @@ export default function GetSpotDetails(){
           </div>
           <div className='hard-code'>
                 <h2>Entire home hosted by {spot.Owner.firstName}</h2>
-                <p>8 guests4 bedrooms4 beds5 baths</p>
+                <p>8 guests • 4 bedrooms • 4 beds • 5 baths</p>
                 <p>description: {spot.description}</p>
                 <hr></hr>
                 <h3>{spot.Owner.firstName} is a Superhost</h3>

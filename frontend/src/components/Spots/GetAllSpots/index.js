@@ -27,10 +27,10 @@ export default function GetAllSpots(){
             <div className='spot-information'>
               <div >
                 <div className='city-state'>
-                  <p className='information'>{spot.city}</p>
-                  <p className='information'>{spot.state}</p>
+                  <p className='information'><b>{spot.city}</b></p>
+                  <p className='information'><b>{spot.state}</b></p>
                 </div>
-                <p className='price'>${spot.price }  night</p>
+                <p className='price'><b>${spot.price }</b>   night</p>
               </div>
               <div className='avegRating'>★{spot.avgRating?Number(spot.avgRating).toFixed(2):"new"}</div>
             </div>

@@ -16,6 +16,10 @@
   margin-left: 10px;
 }
 
+.create-review-container input{
+  width: 167px;
+}
+
 .create-review-container select{
   width: 175px;
 }
@@ -36,4 +40,9 @@
   justify-content: center;
   border: 1px solid grey;
   width:280px;
+}
+
+
+.create-review-container button:hover {
+  background-color: lightgray;
 }
