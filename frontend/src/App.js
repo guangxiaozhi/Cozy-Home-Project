@@ -8,6 +8,7 @@ import GetSpotDetails from './components/Spots/GetSpotDetails';
 import CreateNewSpot from './components/Spots/CreateNewSpot';
 import EditSpot from './components/Spots/EditSpot';
 import CreateNewReview from './components/Reviews/CreateNewReview'
+import NotFound from './components/NotFound';
 
 function App() {
   const dispatch = useDispatch();
@@ -33,8 +34,11 @@ function App() {
           <Route exact path="/spots/:spotId/reviews">
             <CreateNewReview />
           </Route>
-          <Route path="/spots/:spotId">
+          <Route exact path="/spots/:spotId">
             <GetSpotDetails />
+          </Route>
+          <Route path="*">
+            <NotFound />
           </Route>
     </Switch>
     )}

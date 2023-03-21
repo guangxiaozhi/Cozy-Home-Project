@@ -30,10 +30,14 @@ export const loadOneSpot = (singlespot) =>{
 
 export const fetchOneSpot = (spotId) =>  async (dispatch) => {
   const res = await csrfFetch(`/api/spots/${spotId}`);
+  console.log("res.ok", res.ok)
+  // alert(res.ok)
   if(res.ok){
     const specialSpot = await res.json();
     await dispatch(loadOneSpot(specialSpot));
     return specialSpot;
+  }else{
+    return 404
   }
 }
 
