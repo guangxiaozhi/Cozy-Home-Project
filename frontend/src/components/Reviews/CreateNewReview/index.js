@@ -10,7 +10,7 @@ export default function CreateNewReview(){
   const history = useHistory();
 
   const [review, setReview] = useState("");
-  const [stars, setStars] = useState("");
+  const [stars, setStars] = useState("3");
   const [errors, setErrors] = useState([]);
 
   const handleSubmit = async (e) => {
@@ -50,8 +50,7 @@ export default function CreateNewReview(){
           </label>
           <label>
           <span>stars:</span>
-            <select onChange={e => setStars(e.target.value)}>
-            <option>Choose 1-5</option>
+            <select onChange={e => setStars(e.target.value)} value={stars}>
             <option>1</option>
             <option>2</option>
             <option>3</option>
