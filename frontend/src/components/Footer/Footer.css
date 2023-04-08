@@ -1,0 +1,34 @@
+.footer-container {
+  margin-top: -4px;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-around;
+  font-family: Helvetica;
+  border-top: 1px solid rgb(211, 211, 211);
+  background-color: #FFFAF1;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+}
+
+.name {
+  font-size: 16px;
+}
+
+.github-button{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  bottom: 0;
+  width: 250px;
+}
+
+.git-hub-svg{
+  align-items: end;
+}
+
+.linkedin-in-svg{
+  fill:rgb(1, 70, 138);
+  /* align-items: end; */
+}
