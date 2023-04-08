@@ -15,7 +15,7 @@ function Navigation({ isLoaded }){
           <NavLink exact to="/"><img src='https://a0.muscache.com/pictures/35919456-df89-4024-ad50-5fcb7a472df9.jpg'/></NavLink>
         </li>
         <li className="menu-list">
-          <NavLink exact to="/">Home</NavLink>
+          <NavLink exact to="/">Cozy Home</NavLink>
         </li>
       </div>
 
